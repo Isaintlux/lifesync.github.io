@@ -1,242 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <title>LifeSync — Your Intelligent Life Assistant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --teal: #0D9488; --teal-mid: #14B8A6; --teal-light: #CCFBF1; --teal-dark: #0F766E;
-      --sky: #E0F2FE; --blue: #0EA5E9; --ink: #0F172A; --slate: #475569; --muted: #94A3B8;
-      --surface: #F8FAFC; --white: #FFFFFF; --border: #E2E8F0;
-      --radius-md: 18px; --radius-lg: 28px;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --teal:#0D9488;--teal-mid:#14B8A6;--teal-light:#CCFBF1;--teal-dark:#0F766E;
+      --sky:#E0F2FE;--blue:#0EA5E9;--ink:#0F172A;--slate:#475569;--muted:#94A3B8;
+      --surface:#F8FAFC;--white:#FFFFFF;--border:#E2E8F0;--radius-md:18px;--radius-lg:28px;
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden;}
 
     /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 5%; background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px); border-bottom: 1px solid rgba(13,148,136,0.1);
-    }
-    .logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.5rem; color: var(--teal-dark); letter-spacing: -0.5px; text-decoration: none; }
-    .logo span { color: var(--blue); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { text-decoration: none; font-size: 0.88rem; font-weight: 600; color: var(--slate); transition: color .2s; }
-    .nav-links a:hover { color: var(--teal); }
-    .nav-btn { background: var(--teal); color: #fff; border: none; padding: .6rem 1.5rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .88rem; font-weight: 700; cursor: pointer; transition: background .2s, transform .15s; box-shadow: 0 2px 12px rgba(13,148,136,.25); }
-    .nav-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(13,148,136,0.1);}
+    .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--teal-dark);letter-spacing:-0.5px;text-decoration:none;}
+    .logo span{color:var(--blue);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:.88rem;font-weight:600;color:var(--slate);transition:color .2s;}
+    .nav-links a:hover{color:var(--teal);}
+    .nav-right{display:flex;align-items:center;gap:.75rem;}
+    .nav-login{font-size:.85rem;font-weight:600;color:var(--slate);text-decoration:none;}
+    .nav-login:hover{color:var(--teal);}
+    .nav-btn{background:var(--teal);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s;box-shadow:0 2px 12px rgba(13,148,136,.25);}
+    .nav-btn:hover{background:var(--teal-dark);}
 
     /* HERO */
-    .hero {
-      min-height: 100vh; background: linear-gradient(145deg, #F0FDFA 0%, #E0F2FE 55%, #F8FAFC 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 9rem 5% 6rem; position: relative; overflow: hidden;
-    }
-    .hero::before { content: ''; position: absolute; top: -180px; right: -180px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(20,184,166,.22) 0%, transparent 65%); pointer-events: none; }
-    .hero::after  { content: ''; position: absolute; bottom: -120px; left: -120px; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(14,165,233,.16) 0%, transparent 65%); pointer-events: none; }
-    .hero-pill { display: inline-flex; align-items: center; gap: .5rem; background: rgba(13,148,136,.1); border: 1.5px solid rgba(13,148,136,.2); color: var(--teal-dark); border-radius: 999px; padding: .38rem 1.1rem; font-size: .78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.8rem; animation: rise .7s ease both; }
-    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; color: var(--ink); max-width: 760px; animation: rise .7s .1s ease both; }
-    .hero h1 em { font-style: italic; color: var(--teal); }
-    .hero-sub { font-size: clamp(.95rem, 1.8vw, 1.15rem); color: var(--slate); max-width: 520px; line-height: 1.7; margin: 1.4rem auto 2.6rem; animation: rise .7s .2s ease both; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: rise .7s .3s ease both; margin-bottom: 4rem; }
-    .btn-primary { background: var(--teal); color: #fff; border: none; padding: .85rem 2.2rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(13,148,136,.35); transition: background .2s, transform .15s; }
-    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); }
-    .btn-ghost { background: transparent; color: var(--teal-dark); border: 2px solid var(--teal); padding: .85rem 2.2rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .2s, color .2s, transform .15s; }
-    .btn-ghost:hover { background: var(--teal); color: #fff; transform: translateY(-2px); }
-    .icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; max-width: 560px; width: 100%; animation: rise .7s .45s ease both; }
-    .ig-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; gap: .7rem; box-shadow: 0 2px 16px rgba(15,23,42,.06); transition: transform .25s, box-shadow .25s; }
-    .ig-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(13,148,136,.14); }
-    .ig-card i { font-size: 1.6rem; }
-    .ig-card span { font-size: .7rem; font-weight: 600; color: var(--slate); text-align: center; line-height: 1.3; }
-    .ic-teal { color: var(--teal); } .ic-blue { color: var(--blue); } .ic-amber { color: #F59E0B; } .ic-rose { color: #F43F5E; }
+    .hero{min-height:100vh;background:linear-gradient(145deg,#F0FDFA 0%,#E0F2FE 55%,#F8FAFC 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 5% 6rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-180px;right:-180px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(20,184,166,.22) 0%,transparent 65%);pointer-events:none;}
+    .hero::after{content:'';position:absolute;bottom:-120px;left:-120px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.16) 0%,transparent 65%);pointer-events:none;}
+    .hero-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(13,148,136,.1);border:1.5px solid rgba(13,148,136,.2);color:var(--teal-dark);border-radius:999px;padding:.38rem 1.1rem;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.8rem;animation:rise .7s ease both;}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-1.5px;color:var(--ink);max-width:760px;animation:rise .7s .1s ease both;}
+    .hero h1 em{font-style:italic;color:var(--teal);}
+    .hero-sub{font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--slate);max-width:520px;line-height:1.7;margin:1.4rem auto 2.6rem;animation:rise .7s .2s ease both;}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:rise .7s .3s ease both;margin-bottom:4rem;}
+    .btn-primary{background:var(--teal);color:#fff;border:none;padding:.85rem 2.2rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 6px 24px rgba(13,148,136,.35);transition:background .2s,transform .15s;}
+    .btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px);}
+    .btn-ghost{background:transparent;color:var(--teal-dark);border:2px solid var(--teal);padding:.85rem 2.2rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s,transform .15s;}
+    .btn-ghost:hover{background:var(--teal);color:#fff;transform:translateY(-2px);}
 
-    /* SECTION COMMONS */
-    section { padding: 6rem 5%; }
-    .section-eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: .6rem; text-align: center; }
-    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -1px; color: var(--ink); text-align: center; margin-bottom: .75rem; line-height: 1.15; }
-    .section-desc { color: var(--slate); font-size: .98rem; line-height: 1.65; max-width: 480px; margin: 0 auto 3.5rem; text-align: center; }
+    /* ICON GRID */
+    .icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;max-width:560px;width:100%;animation:rise .7s .45s ease both;}
+    .ig-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;box-shadow:0 2px 16px rgba(15,23,42,.06);cursor:pointer;transition:transform .25s,box-shadow .25s;}
+    .ig-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(13,148,136,.18);}
+    .ig-card:active{transform:scale(.97);}
+    .ig-card i{font-size:1.6rem;}
+    .ig-card span{font-size:.7rem;font-weight:600;color:var(--slate);text-align:center;line-height:1.3;}
+    .ig-tap{font-size:.58rem;color:var(--teal);font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+    .ic-teal{color:var(--teal);} .ic-blue{color:var(--blue);} .ic-amber{color:#F59E0B;} .ic-rose{color:#F43F5E;}
+
+    /* SECTIONS */
+    section{padding:6rem 5%;}
+    .section-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem;text-align:center;}
+    .section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-1px;color:var(--ink);text-align:center;margin-bottom:.75rem;line-height:1.15;}
+    .section-desc{color:var(--slate);font-size:.98rem;line-height:1.65;max-width:480px;margin:0 auto 3.5rem;text-align:center;}
 
     /* FEATURES */
-    .features { background: var(--white); }
-    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; max-width: 1080px; margin: 0 auto; }
-    .feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2rem 1.8rem; position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s; }
-    .feat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
-    .feat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(13,148,136,.12); }
-    .feat-card:hover::after { transform: scaleX(1); }
-    .feat-icon-wrap { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.2rem; }
-    .bg-teal { background: var(--teal-light); color: var(--teal-dark); }
-    .bg-sky { background: var(--sky); color: var(--blue); }
-    .bg-amber { background: #FEF3C7; color: #B45309; }
-    .bg-rose { background: #FFE4E6; color: #BE123C; }
-    .feat-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: .55rem; }
-    .feat-card p { font-size: .88rem; color: var(--slate); line-height: 1.6; }
+    .features{background:var(--white);}
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;max-width:1080px;margin:0 auto;}
+    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:2rem 1.8rem;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+    .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+    .feat-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(13,148,136,.12);}
+    .feat-card:hover::after{transform:scaleX(1);}
+    .feat-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem;}
+    .bg-teal{background:var(--teal-light);color:var(--teal-dark);}
+    .bg-sky{background:var(--sky);color:var(--blue);}
+    .bg-amber{background:#FEF3C7;color:#B45309;}
+    .bg-rose{background:#FFE4E6;color:#BE123C;}
+    .feat-card h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.55rem;}
+    .feat-card p{font-size:.88rem;color:var(--slate);line-height:1.6;}
+    .feat-more{display:inline-block;margin-top:.8rem;font-size:.8rem;font-weight:700;color:var(--teal);}
 
     /* BRANCHES */
-    .solutions { background: linear-gradient(160deg, #F0FDFA 0%, #E0F2FE 100%); }
-    .branch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; max-width: 1080px; margin: 0 auto; }
-    .branch-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.4rem 2rem; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
-    .branch-card:hover { transform: translateY(-7px); box-shadow: 0 20px 48px rgba(13,148,136,.14); }
-    .branch-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
-    .branch-icon { width: 56px; height: 56px; border-radius: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-    .branch-badge { font-size: .68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: .3rem .75rem; border-radius: 999px; }
-    .badge-teal { background: var(--teal-light); color: var(--teal-dark); }
-    .badge-sky { background: var(--sky); color: #0369A1; }
-    .badge-amber { background: #FEF3C7; color: #92400E; }
-    .branch-card h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); margin-bottom: .55rem; letter-spacing: -.4px; }
-    .branch-card p { font-size: .9rem; color: var(--slate); line-height: 1.65; flex: 1; }
-    .branch-features { list-style: none; margin: 1.2rem 0 1.8rem; display: flex; flex-direction: column; gap: .45rem; }
-    .branch-features li { font-size: .83rem; color: var(--slate); display: flex; align-items: flex-start; gap: .5rem; }
-    .branch-features li i { color: var(--teal); font-size: .7rem; margin-top: .22rem; flex-shrink: 0; }
-    .btn-learn { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--teal-dark); border: 2px solid var(--teal); border-radius: 999px; padding: .65rem 1.5rem; font-size: .88rem; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; transition: background .2s, color .2s, transform .15s; width: fit-content; }
-    .btn-learn:hover { background: var(--teal); color: #fff; transform: translateY(-1px); }
+    .solutions{background:linear-gradient(160deg,#F0FDFA 0%,#E0F2FE 100%);}
+    .branch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;max-width:1080px;margin:0 auto;}
+    .branch-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.4rem 2rem;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;}
+    .branch-card:hover{transform:translateY(-7px);box-shadow:0 20px 48px rgba(13,148,136,.14);}
+    .branch-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+    .branch-icon{width:56px;height:56px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+    .branch-badge{font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:.3rem .75rem;border-radius:999px;}
+    .badge-teal{background:var(--teal-light);color:var(--teal-dark);}
+    .badge-sky{background:var(--sky);color:#0369A1;}
+    .badge-amber{background:#FEF3C7;color:#92400E;}
+    .branch-card h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:.55rem;letter-spacing:-.4px;}
+    .branch-card p{font-size:.9rem;color:var(--slate);line-height:1.65;flex:1;}
+    .branch-features{list-style:none;margin:1.2rem 0 1.8rem;display:flex;flex-direction:column;gap:.45rem;}
+    .branch-features li{font-size:.83rem;color:var(--slate);display:flex;align-items:flex-start;gap:.5rem;}
+    .branch-features li i{color:var(--teal);font-size:.7rem;margin-top:.22rem;flex-shrink:0;}
+    .btn-learn{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--teal-dark);border:2px solid var(--teal);border-radius:999px;padding:.65rem 1.5rem;font-size:.88rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;transition:background .2s,color .2s,transform .15s;width:fit-content;}
+    .btn-learn:hover{background:var(--teal);color:#fff;transform:translateY(-1px);}
 
     /* PRICING */
-    .pricing { background: var(--white); }
-    .pricing-toggle { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
-    .toggle-label { font-size: .9rem; font-weight: 600; color: var(--muted); transition: color .2s; }
-    .toggle-label.active { color: var(--ink); }
-    .toggle-track { width: 52px; height: 28px; border-radius: 999px; background: var(--teal); cursor: pointer; position: relative; border: none; outline: none; }
-    .toggle-thumb { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .25s; pointer-events: none; }
-    .toggle-track.yearly .toggle-thumb { transform: translateX(24px); }
-    .save-badge { background: #FEF3C7; color: #92400E; font-size: .7rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: .25rem .6rem; border-radius: 999px; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; max-width: 1080px; margin: 0 auto; }
-    .price-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.2rem 2rem; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
-    .price-card.featured { background: var(--teal-dark); border-color: var(--teal-dark); color: #fff; }
-    .price-card:hover { transform: translateY(-6px); box-shadow: 0 18px 48px rgba(13,148,136,.14); }
-    .price-card.featured:hover { box-shadow: 0 18px 48px rgba(13,148,136,.35); }
-    .featured-ribbon { position: absolute; top: 1.6rem; right: -2.5rem; background: #F59E0B; color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: .28rem 3rem; transform: rotate(35deg); }
-    .price-plan { font-size: .72rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: .8rem; }
-    .price-card:not(.featured) .price-plan { color: var(--teal); }
-    .price-card.featured .price-plan { color: var(--teal-light); }
-    .price-amount { display: flex; align-items: flex-end; gap: .3rem; margin-bottom: .35rem; }
-    .price-amount .currency { font-size: 1.4rem; font-weight: 700; line-height: 1.6; }
-    .price-amount .amount { font-family: 'Fraunces', serif; font-size: 3.2rem; font-weight: 700; line-height: 1; letter-spacing: -2px; }
-    .price-amount .period { font-size: .85rem; margin-bottom: .35rem; }
-    .price-card:not(.featured) .price-amount .period { color: var(--muted); }
-    .price-card.featured .price-amount .period { color: rgba(255,255,255,.55); }
-    .price-annual-note { font-size: .78rem; margin-bottom: 1.4rem; min-height: 1.1rem; transition: all .2s; }
-    .price-card:not(.featured) .price-annual-note { color: var(--muted); }
-    .price-card.featured .price-annual-note { color: rgba(255,255,255,.5); }
-    .price-desc { font-size: .88rem; line-height: 1.55; margin-bottom: 1.4rem; }
-    .price-card:not(.featured) .price-desc { color: var(--slate); }
-    .price-card.featured .price-desc { color: rgba(255,255,255,.75); }
-    .price-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.4rem; }
-    .price-card.featured .price-divider { border-color: rgba(255,255,255,.15); }
-    .price-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; flex: 1; margin-bottom: 1.8rem; }
-    .price-features li { font-size: .86rem; display: flex; align-items: flex-start; gap: .55rem; }
-    .price-card:not(.featured) .price-features li { color: var(--slate); }
-    .price-card.featured .price-features li { color: rgba(255,255,255,.85); }
-    .price-features li i { font-size: .68rem; margin-top: .24rem; flex-shrink: 0; }
-    .price-card:not(.featured) .price-features li i { color: var(--teal); }
-    .price-card.featured .price-features li i { color: var(--teal-light); }
-    .btn-price { display: block; text-align: center; border-radius: 999px; padding: .8rem 1.5rem; font-size: .92rem; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; border: none; text-decoration: none; transition: background .2s, transform .15s, box-shadow .2s; }
-    .btn-price-outline { background: transparent; color: var(--teal-dark); border: 2px solid var(--teal); }
-    .btn-price-outline:hover { background: var(--teal); color: #fff; transform: translateY(-1px); }
-    .btn-price-white { background: #fff; color: var(--teal-dark); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
-    .btn-price-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    .pricing{background:var(--white);}
+    .pricing-toggle{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:3rem;}
+    .toggle-label{font-size:.9rem;font-weight:600;color:var(--muted);transition:color .2s;}
+    .toggle-label.active{color:var(--ink);}
+    .toggle-track{width:52px;height:28px;border-radius:999px;background:var(--teal);cursor:pointer;position:relative;border:none;outline:none;}
+    .toggle-thumb{position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .25s;pointer-events:none;}
+    .toggle-track.yearly .toggle-thumb{transform:translateX(24px);}
+    .save-badge{background:#FEF3C7;color:#92400E;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:.25rem .6rem;border-radius:999px;}
+    .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;max-width:1080px;margin:0 auto;}
+    .price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.2rem 2rem;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
+    .price-card.featured{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff;}
+    .price-card:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(13,148,136,.14);}
+    .price-card.featured:hover{box-shadow:0 18px 48px rgba(13,148,136,.35);}
+    .featured-ribbon{position:absolute;top:1.6rem;right:-2.5rem;background:#F59E0B;color:#fff;font-size:.62rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:.28rem 3rem;transform:rotate(35deg);}
+    .price-plan{font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:.8rem;}
+    .price-card:not(.featured) .price-plan{color:var(--teal);}
+    .price-card.featured .price-plan{color:var(--teal-light);}
+    .price-amount{display:flex;align-items:flex-end;gap:.3rem;margin-bottom:.35rem;}
+    .price-amount .currency{font-size:1.4rem;font-weight:700;line-height:1.6;}
+    .price-amount .amount{font-family:'Fraunces',serif;font-size:3.2rem;font-weight:700;line-height:1;letter-spacing:-2px;}
+    .price-amount .period{font-size:.85rem;margin-bottom:.35rem;}
+    .price-card:not(.featured) .price-amount .period{color:var(--muted);}
+    .price-card.featured .price-amount .period{color:rgba(255,255,255,.55);}
+    .price-annual-note{font-size:.78rem;margin-bottom:1.4rem;min-height:1.1rem;}
+    .price-card:not(.featured) .price-annual-note{color:var(--muted);}
+    .price-card.featured .price-annual-note{color:rgba(255,255,255,.5);}
+    .price-desc{font-size:.88rem;line-height:1.55;margin-bottom:1.4rem;}
+    .price-card:not(.featured) .price-desc{color:var(--slate);}
+    .price-card.featured .price-desc{color:rgba(255,255,255,.75);}
+    .price-divider{border:none;border-top:1px solid var(--border);margin-bottom:1.4rem;}
+    .price-card.featured .price-divider{border-color:rgba(255,255,255,.15);}
+    .price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;flex:1;margin-bottom:1.8rem;}
+    .price-features li{font-size:.86rem;display:flex;align-items:flex-start;gap:.55rem;}
+    .price-card:not(.featured) .price-features li{color:var(--slate);}
+    .price-card.featured .price-features li{color:rgba(255,255,255,.85);}
+    .price-features li i{font-size:.68rem;margin-top:.24rem;flex-shrink:0;}
+    .price-card:not(.featured) .price-features li i{color:var(--teal);}
+    .price-card.featured .price-features li i{color:var(--teal-light);}
+    .btn-price{display:block;text-align:center;border-radius:999px;padding:.8rem 1.5rem;font-size:.92rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;border:none;text-decoration:none;transition:background .2s,transform .15s;}
+    .btn-price-outline{background:transparent;color:var(--teal-dark);border:2px solid var(--teal);}
+    .btn-price-outline:hover{background:var(--teal);color:#fff;transform:translateY(-1px);}
+    .btn-price-white{background:#fff;color:var(--teal-dark);box-shadow:0 4px 16px rgba(0,0,0,.12);}
+    .btn-price-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
 
     /* CTA STRIP */
-    .cta-strip { background: var(--teal-dark); padding: 5rem 5%; text-align: center; position: relative; overflow: hidden; }
-    .cta-strip::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 700px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 70%); pointer-events: none; }
-    .cta-strip h2 { font-family: 'Fraunces', serif; font-size: clamp(1.7rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -1px; color: #fff; margin-bottom: .75rem; }
-    .cta-strip h2 em { font-style: italic; color: var(--teal-light); }
-    .cta-strip p { color: rgba(255,255,255,.72); font-size: 1rem; max-width: 440px; margin: 0 auto 2rem; line-height: 1.6; }
-    .btn-white { background: #fff; color: var(--teal-dark); border: none; padding: .85rem 2.4rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 800; cursor: pointer; box-shadow: 0 6px 24px rgba(0,0,0,.18); transition: transform .15s, box-shadow .2s; }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+    .cta-strip{background:var(--teal-dark);padding:5rem 5%;text-align:center;position:relative;overflow:hidden;}
+    .cta-strip::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.07) 0%,transparent 70%);pointer-events:none;}
+    .cta-strip h2{font-family:'Fraunces',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-1px;color:#fff;margin-bottom:.75rem;}
+    .cta-strip h2 em{font-style:italic;color:var(--teal-light);}
+    .cta-strip p{color:rgba(255,255,255,.72);font-size:1rem;max-width:440px;margin:0 auto 2rem;line-height:1.6;}
+    .btn-white{background:#fff;color:var(--teal-dark);border:none;padding:.85rem 2.4rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.18);transition:transform .15s,box-shadow .2s;}
+    .btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25);}
 
     /* FOOTER */
-    footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 3.5rem 5% 2rem; }
-    .footer-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2.5rem; }
-    .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.4rem; color: #CCFBF1; display: block; margin-bottom: .8rem; text-decoration: none; }
-    .footer-logo span { color: #5EEAD4; }
-    .footer-brand p { font-size: .85rem; line-height: 1.65; max-width: 280px; }
-    footer h4 { font-size: .78rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 1rem; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-    .footer-links a { text-decoration: none; color: rgba(255,255,255,.5); font-size: .88rem; transition: color .2s; }
-    .footer-links a:hover { color: #CCFBF1; }
-    .footer-contact { display: flex; flex-direction: column; gap: .55rem; }
-    .footer-contact span { font-size: .88rem; display: flex; align-items: center; gap: .6rem; }
-    .footer-contact i { color: var(--teal-mid); width: 16px; }
-    .footer-bottom { max-width: 1080px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,.08); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer-bottom p { font-size: .82rem; }
-    .social-links { display: flex; gap: .9rem; }
-    .social-links a { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); color: rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: .85rem; transition: background .2s, color .2s; }
-    .social-links a:hover { background: var(--teal); color: #fff; }
+    footer{background:var(--ink);color:rgba(255,255,255,.55);padding:3.5rem 5% 2rem;}
+    .footer-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+    .footer-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;color:#CCFBF1;display:block;margin-bottom:.8rem;text-decoration:none;}
+    .footer-logo span{color:#5EEAD4;}
+    .footer-brand p{font-size:.85rem;line-height:1.65;max-width:280px;}
+    footer h4{font-size:.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:1rem;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+    .footer-links a{text-decoration:none;color:rgba(255,255,255,.5);font-size:.88rem;transition:color .2s;}
+    .footer-links a:hover{color:#CCFBF1;}
+    .footer-contact{display:flex;flex-direction:column;gap:.55rem;}
+    .footer-contact span{font-size:.88rem;display:flex;align-items:center;gap:.6rem;}
+    .footer-contact i{color:var(--teal-mid);width:16px;}
+    .footer-bottom{max-width:1080px;margin:0 auto;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-bottom p{font-size:.82rem;}
+    .social-links{display:flex;gap:.9rem;}
+    .social-links a{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.85rem;transition:background .2s,color .2s;}
+    .social-links a:hover{background:var(--teal);color:#fff;}
 
-    @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:9999;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal-sheet{background:var(--white);border-radius:24px 24px 0 0;width:100%;max-width:600px;max-height:88vh;overflow-y:auto;transform:translateY(60px);transition:transform .3s;}
+    .modal-overlay.open .modal-sheet{transform:translateY(0);}
+    .modal-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:1rem auto .5rem;}
+    .modal-close{position:absolute;top:.8rem;right:1.2rem;background:var(--surface);border:1px solid var(--border);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.85rem;color:var(--slate);display:flex;align-items:center;justify-content:center;}
+    .modal-close:hover{background:var(--border);}
+    .modal-sheet{position:relative;}
+    .modal-header{padding:1rem 1.5rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;}
+    .modal-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+    .modal-header h2{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--ink);letter-spacing:-.4px;}
+    .modal-header p{font-size:.82rem;color:var(--muted);margin-top:.1rem;}
+    .modal-body{padding:1.5rem;}
+    .msec{margin-bottom:1.5rem;}
+    .msec h4{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:.7rem;}
+    .msec p{font-size:.9rem;color:var(--slate);line-height:1.65;}
+    .mlist{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+    .mlist li{font-size:.88rem;color:var(--slate);display:flex;align-items:flex-start;gap:.6rem;line-height:1.5;}
+    .mlist li i{color:var(--teal);font-size:.72rem;margin-top:.22rem;flex-shrink:0;}
+    .modal-cta{display:block;width:100%;background:var(--teal);color:#fff;border:none;padding:.9rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:1.5rem;transition:background .2s;text-align:center;text-decoration:none;}
+    .modal-cta:hover{background:var(--teal-dark);}
+    .how-step{display:flex;gap:1rem;align-items:flex-start;padding:.9rem 0;border-bottom:1px solid var(--border);}
+    .how-step:last-of-type{border-bottom:none;}
+    .how-num{width:36px;height:36px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);font-family:'Fraunces',serif;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .how-text h4{font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;}
+    .how-text p{font-size:.83rem;color:var(--slate);line-height:1.55;}
+    .qcat-wrap{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;}
+    .qcat{padding:.45rem 1rem;border-radius:999px;border:2px solid var(--border);font-size:.82rem;font-weight:700;color:var(--slate);cursor:pointer;transition:all .15s;background:var(--surface);user-select:none;}
+    .qcat.picked{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark);}
+    .qpreview{background:linear-gradient(135deg,var(--teal-dark),#0D5C56);border-radius:16px;padding:1.2rem 1.4rem;margin-top:1rem;}
+    .qpreview .qt{font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;color:#fff;line-height:1.55;margin-bottom:.4rem;}
+    .qpreview .qs{font-size:.72rem;color:rgba(255,255,255,.55);font-weight:600;}
+    .btn-try{background:none;border:1.5px solid var(--teal);color:var(--teal-dark);border-radius:999px;padding:.4rem 1rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:.7rem;}
+    .btn-try:hover{background:var(--teal-light);}
 
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .icon-grid { grid-template-columns: repeat(2, 1fr); max-width: 340px; }
-      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
-    @media (max-width: 480px) {
-      .hero-actions { flex-direction: column; align-items: center; }
-      .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
-    }
+    @keyframes rise{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){.nav-links{display:none;}.icon-grid{grid-template-columns:repeat(2,1fr);max-width:340px;}.footer-inner{grid-template-columns:1fr;gap:2rem;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+    @media(max-width:480px){.hero-actions{flex-direction:column;align-items:center;}.btn-primary,.btn-ghost{width:100%;max-width:300px;text-align:center;}}
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="logo">Life<span>Sync</span></a>
+  <a href="index.html" class="logo">Life<span>Sync</span></a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#solutions">Solutions</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-btn">Get Started</button>
+  <div class="nav-right" id="nav-right">
+    <a href="login.html" class="nav-login">Log in</a>
+    <button class="nav-btn" onclick="goStart()">Get Started</button>
+  </div>
 </nav>
 
 <section class="hero">
   <div class="hero-pill"><i class="fa-solid fa-bolt"></i>&nbsp; AI-Powered Life Assistant</div>
-  <h1>LifeSync —<br><em>Your Intelligent</em><br>Life Assistant</h1>
-  <p class="hero-sub">Automatically log purchases, track your health, stay motivated, and never miss a task — all in one place.</p>
+  <h1>LifeSync &mdash;<br><em>Your Intelligent</em><br>Life Assistant</h1>
+  <p class="hero-sub">Automatically log purchases, track your health, stay motivated, and never miss a task &mdash; all in one place.</p>
   <div class="hero-actions">
-    <button class="btn-primary"><i class="fa-solid fa-rocket" style="margin-right:.45rem"></i>Start for Free</button>
-    <button class="btn-ghost"><i class="fa-solid fa-play" style="margin-right:.45rem"></i>See How It Works</button>
+    <button class="btn-primary" onclick="goStart()"><i class="fa-solid fa-rocket" style="margin-right:.45rem"></i>Start for Free</button>
+    <button class="btn-ghost" onclick="showHow()"><i class="fa-solid fa-play" style="margin-right:.45rem"></i>See How It Works</button>
   </div>
   <div class="icon-grid">
-    <div class="ig-card"><i class="fa-solid fa-receipt ic-teal"></i><span>Receipt &amp; Purchase Logging</span></div>
-    <div class="ig-card"><i class="fa-solid fa-person-walking ic-blue"></i><span>Step &amp; Health Tracking</span></div>
-    <div class="ig-card"><i class="fa-solid fa-quote-left ic-amber"></i><span>Daily Motivational Quotes</span></div>
-    <div class="ig-card"><i class="fa-solid fa-bell ic-rose"></i><span>Smart Alarms &amp; Tasks</span></div>
+    <div class="ig-card" onclick="showFeature('receipt')">
+      <i class="fa-solid fa-receipt ic-teal"></i>
+      <span>Receipt &amp; Purchase Logging</span>
+      <span class="ig-tap">Tap to learn more</span>
+    </div>
+    <div class="ig-card" onclick="showFeature('health')">
+      <i class="fa-solid fa-person-walking ic-blue"></i>
+      <span>Step &amp; Health Tracking</span>
+      <span class="ig-tap">Tap to learn more</span>
+    </div>
+    <div class="ig-card" onclick="showFeature('quotes')">
+      <i class="fa-solid fa-quote-left ic-amber"></i>
+      <span>Daily Motivational Quotes</span>
+      <span class="ig-tap">Tap to learn more</span>
+    </div>
+    <div class="ig-card" onclick="showFeature('alarms')">
+      <i class="fa-solid fa-bell ic-rose"></i>
+      <span>Smart Alarms &amp; Tasks</span>
+      <span class="ig-tap">Tap to learn more</span>
+    </div>
   </div>
 </section>
 
 <section class="features" id="features">
   <p class="section-eyebrow">Core Features</p>
   <h2 class="section-title">Everything You Need, Built In</h2>
-  <p class="section-desc">Four powerful pillars designed to simplify your daily life — all synced intelligently.</p>
+  <p class="section-desc">Four powerful pillars designed to simplify your daily life &mdash; all synced intelligently.</p>
   <div class="feat-grid">
-    <div class="feat-card">
+    <div class="feat-card" onclick="showFeature('receipt')">
       <div class="feat-icon-wrap bg-teal"><i class="fa-solid fa-camera-retro"></i></div>
       <h3>Auto Purchase Logging</h3>
-      <p>Snap a receipt, forward an email, or let LifeSync read your SMS. Every expense is logged automatically — zero manual entry.</p>
+      <p>Snap a receipt, forward an email, or let LifeSync read your SMS. Every expense is logged automatically.</p>
+      <span class="feat-more">Learn more &rarr;</span>
     </div>
-    <div class="feat-card">
+    <div class="feat-card" onclick="showFeature('health')">
       <div class="feat-icon-wrap bg-sky"><i class="fa-solid fa-heart-pulse"></i></div>
       <h3>Step &amp; Goal Tracking</h3>
-      <p>Monitor your daily steps, hydration, and health goals. LifeSync keeps you on track with gentle reminders and progress insights.</p>
+      <p>Monitor your daily steps, hydration, and health goals. LifeSync keeps you on track with gentle reminders.</p>
+      <span class="feat-more">Learn more &rarr;</span>
     </div>
-    <div class="feat-card">
+    <div class="feat-card" onclick="showFeature('quotes')">
       <div class="feat-icon-wrap bg-amber"><i class="fa-solid fa-book-open"></i></div>
       <h3>Daily Motivational Quotes</h3>
-      <p>Start every morning with wisdom — choose from Bible verses, Quranic passages, stoic philosophy, or universal life quotes.</p>
+      <p>Choose from Bible verses, Quranic passages, stoic philosophy, or universal life quotes.</p>
+      <span class="feat-more">Learn more &rarr;</span>
     </div>
-    <div class="feat-card">
+    <div class="feat-card" onclick="showFeature('alarms')">
       <div class="feat-icon-wrap bg-rose"><i class="fa-solid fa-bell-concierge"></i></div>
       <h3>Smart Alarms That Ring</h3>
-      <p>Alarms you actually can't ignore. Our smart system escalates alerts until you've confirmed you're awake and on task.</p>
+      <p>Alarms that escalate until you confirm you are awake and on task. No more snooze loops.</p>
+      <span class="feat-more">Learn more &rarr;</span>
     </div>
   </div>
 </section>
@@ -244,7 +293,7 @@
 <section class="solutions" id="solutions">
   <p class="section-eyebrow">Our Solutions</p>
   <h2 class="section-title">LifeSync for Every <em style="font-style:italic;color:var(--teal)">Community</em></h2>
-  <p class="section-desc">Whether you're an individual, a local government unit, or a growing business — LifeSync has a branch built for you.</p>
+  <p class="section-desc">Whether you are an individual, a local government unit, or a growing business &mdash; LifeSync has a branch built for you.</p>
   <div class="branch-grid">
     <div class="branch-card">
       <div class="branch-top">
@@ -252,7 +301,7 @@
         <span class="branch-badge badge-teal">For Individuals</span>
       </div>
       <h3>LifeSync for Individuals</h3>
-      <p>Your all-in-one personal assistant. Stay on top of finances, health, mindset, and schedule without juggling multiple apps.</p>
+      <p>Your all-in-one personal assistant. Stay on top of finances, health, mindset, and schedule.</p>
       <ul class="branch-features">
         <li><i class="fa-solid fa-check"></i> Automated purchase &amp; expense tracker</li>
         <li><i class="fa-solid fa-check"></i> Personalized health &amp; step goals</li>
@@ -267,7 +316,7 @@
         <span class="branch-badge badge-sky">For Communities</span>
       </div>
       <h3>LifeSync for Communities</h3>
-      <p>Modernize community governance. Residents can file and track complaints, and officials can report directly to DTI — all digitally.</p>
+      <p>Modernize community governance. Residents file and track complaints, officials report to DTI digitally.</p>
       <ul class="branch-features">
         <li><i class="fa-solid fa-check"></i> Resident complaint submission portal</li>
         <li><i class="fa-solid fa-check"></i> Real-time complaint status tracking</li>
@@ -282,7 +331,7 @@
         <span class="branch-badge badge-amber">For Business</span>
       </div>
       <h3>LifeSync for Business</h3>
-      <p>Empower your team with built-in wellness monitoring and AI-driven expense management — scale without losing sight of your people.</p>
+      <p>Empower your team with wellness monitoring and AI-driven expense management.</p>
       <ul class="branch-features">
         <li><i class="fa-solid fa-check"></i> Team wellness &amp; activity dashboard</li>
         <li><i class="fa-solid fa-check"></i> Shared expense &amp; budget tracking</li>
@@ -297,23 +346,17 @@
 <section class="pricing" id="pricing">
   <p class="section-eyebrow">Pricing</p>
   <h2 class="section-title">Simple, Transparent <em style="font-style:italic;color:var(--teal)">Pricing</em></h2>
-  <p class="section-desc">No hidden fees. Pick the plan that fits your life — or your organization.</p>
+  <p class="section-desc">No hidden fees. Pick the plan that fits your life.</p>
   <div class="pricing-toggle">
     <span class="toggle-label active" id="lbl-monthly">Monthly</span>
-    <button class="toggle-track" id="billing-toggle" aria-label="Toggle billing period">
-      <div class="toggle-thumb"></div>
-    </button>
+    <button class="toggle-track" id="billing-toggle"><div class="toggle-thumb"></div></button>
     <span class="toggle-label" id="lbl-yearly">Yearly</span>
     <span class="save-badge">Save ~11%</span>
   </div>
   <div class="pricing-grid">
     <div class="price-card">
       <p class="price-plan">Individuals</p>
-      <div class="price-amount">
-        <span class="currency">$</span>
-        <span class="amount" id="price-ind">7</span>
-        <span class="period">/mo</span>
-      </div>
+      <div class="price-amount"><span class="currency">$</span><span class="amount" id="price-ind">7</span><span class="period">/mo</span></div>
       <p class="price-annual-note" id="note-ind">Billed monthly</p>
       <p class="price-desc">Everything you need to take control of your finances, health, and daily routine.</p>
       <hr class="price-divider"/>
@@ -324,18 +367,14 @@
         <li><i class="fa-solid fa-check"></i> Smart alarms &amp; task scheduler</li>
         <li><i class="fa-solid fa-check"></i> 1 user account</li>
       </ul>
-      <a href="#" class="btn-price btn-price-outline">Get Started</a>
+      <button class="btn-price btn-price-outline" onclick="goSignup('individual')">Get Started</button>
     </div>
     <div class="price-card featured">
       <div class="featured-ribbon">Popular</div>
       <p class="price-plan">Communities</p>
-      <div class="price-amount">
-        <span class="currency">$</span>
-        <span class="amount" id="price-com">15</span>
-        <span class="period">/mo</span>
-      </div>
+      <div class="price-amount"><span class="currency">$</span><span class="amount" id="price-com">15</span><span class="period">/mo</span></div>
       <p class="price-annual-note" id="note-com">Billed monthly</p>
-      <p class="price-desc">Built for local government units and community leaders managing resident services.</p>
+      <p class="price-desc">Built for local government units managing resident services digitally.</p>
       <hr class="price-divider"/>
       <ul class="price-features">
         <li><i class="fa-solid fa-check"></i> Resident complaint portal</li>
@@ -344,17 +383,13 @@
         <li><i class="fa-solid fa-check"></i> Community announcement board</li>
         <li><i class="fa-solid fa-check"></i> Up to 5 admin accounts</li>
       </ul>
-      <a href="#" class="btn-price btn-price-white">Get Started</a>
+      <button class="btn-price btn-price-white" onclick="goSignup('communities')">Get Started</button>
     </div>
     <div class="price-card">
       <p class="price-plan">Business</p>
-      <div class="price-amount">
-        <span class="currency">$</span>
-        <span class="amount" id="price-biz">99</span>
-        <span class="period">/mo</span>
-      </div>
-      <p class="price-annual-note" id="note-biz">Billed monthly · up to 10 users</p>
-      <p class="price-desc">Team wellness, expense tracking, and productivity analytics — all in one dashboard.</p>
+      <div class="price-amount"><span class="currency">$</span><span class="amount" id="price-biz">99</span><span class="period">/mo</span></div>
+      <p class="price-annual-note" id="note-biz">Billed monthly &middot; up to 10 users</p>
+      <p class="price-desc">Team wellness, expense tracking, and productivity analytics in one dashboard.</p>
       <hr class="price-divider"/>
       <ul class="price-features">
         <li><i class="fa-solid fa-check"></i> Team wellness &amp; activity dashboard</li>
@@ -363,22 +398,22 @@
         <li><i class="fa-solid fa-check"></i> Department-level reporting</li>
         <li><i class="fa-solid fa-check"></i> Up to 10 user accounts</li>
       </ul>
-      <a href="#" class="btn-price btn-price-outline">Get Started</a>
+      <button class="btn-price btn-price-outline" onclick="goSignup('business')">Get Started</button>
     </div>
   </div>
 </section>
 
 <section class="cta-strip">
   <h2>Ready to <em>Sync Your Life?</em></h2>
-  <p>Join thousands of users already living smarter with LifeSync. It's free to start.</p>
-  <button class="btn-white"><i class="fa-solid fa-rocket" style="margin-right:.45rem"></i>Get LifeSync Free</button>
+  <p>Join thousands of users already living smarter with LifeSync.</p>
+  <button class="btn-white" onclick="goStart()"><i class="fa-solid fa-rocket" style="margin-right:.45rem"></i>Get LifeSync Free</button>
 </section>
 
 <footer id="contact">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="#" class="footer-logo">Life<span>Sync</span></a>
-      <p>Your intelligent daily companion — helping individuals, communities, and businesses live and work smarter.</p>
+      <a href="index.html" class="footer-logo">Life<span>Sync</span></a>
+      <p>Your intelligent daily companion &mdash; helping individuals, communities, and businesses live and work smarter.</p>
     </div>
     <div>
       <h4>Solutions</h4>
@@ -396,7 +431,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 LifeSync. All rights reserved.</p>
+    <p>&copy; 2026 LifeSync. All rights reserved.</p>
     <div class="social-links">
       <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
       <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -405,23 +440,242 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const toggle = document.getElementById('billing-toggle');
-  const lblM = document.getElementById('lbl-monthly');
-  const lblY = document.getElementById('lbl-yearly');
-  let yearly = false;
-  const data = {
-    ind: { mo: '7',  yr: '6.25', noteM: 'Billed monthly', noteY: '$75 billed yearly' },
-    com: { mo: '15', yr: '12.50', noteM: 'Billed monthly', noteY: '$150 billed yearly' },
-    biz: { mo: '99', yr: '82.50', noteM: 'Billed monthly · up to 10 users', noteY: '$990 billed yearly · up to 10 users' }
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-sheet" id="modal-sheet">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  // ── GUARD ──
+  function getFingerprint() {
+    var s = [navigator.userAgent, navigator.language, screen.width + 'x' + screen.height, screen.colorDepth, new Date().getTimezoneOffset()].join('|');
+    var h = 0;
+    for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h | 0; }
+    return Math.abs(h).toString(36);
+  }
+  function trialUsed() {
+    var used = JSON.parse(localStorage.getItem('ls_trial_devices') || '[]');
+    return used.indexOf(getFingerprint()) > -1;
+  }
+  function isLoggedIn() { return !!localStorage.getItem('ls_user'); }
+  function hasPaid() { return localStorage.getItem('ls_paid') === 'true'; }
+  function getCtaHref(plan) {
+    if (isLoggedIn() && hasPaid()) return 'dashboard.html';
+    if (isLoggedIn()) return 'checkout.html?plan=' + plan;
+    if (trialUsed()) return 'signup.html?plan=' + plan + '&trial_used=1';
+    return 'signup.html?plan=' + plan;
+  }
+  function goStart() { window.location.href = getCtaHref('individual'); }
+  function goSignup(plan) { window.location.href = getCtaHref(plan); }
+
+  // Update nav if logged in
+  var u = JSON.parse(localStorage.getItem('ls_user') || 'null');
+  if (u) {
+    document.getElementById('nav-right').innerHTML = '<a href="dashboard.html" class="nav-login">Dashboard</a><button class="nav-btn" onclick="window.location.href=\'dashboard.html\'">My Account</button>';
+  }
+
+  // ── BILLING TOGGLE ──
+  var yearly = false;
+  var prices = { ind: [7, 6.25], com: [15, 12.50], biz: [99, 82.50] };
+  var notes = {
+    ind: ['Billed monthly', '$75 billed yearly'],
+    com: ['Billed monthly', '$150 billed yearly'],
+    biz: ['Billed monthly \u00b7 up to 10 users', '$990 billed yearly \u00b7 up to 10 users']
   };
-  toggle.addEventListener('click', () => {
+  document.getElementById('billing-toggle').addEventListener('click', function() {
     yearly = !yearly;
-    toggle.classList.toggle('yearly', yearly);
-    lblM.classList.toggle('active', !yearly);
-    lblY.classList.toggle('active', yearly);
-    const k = yearly ? 'yr' : 'mo';
-    document.getElementById('price-ind').textContent = data.ind[k];
-    document.getElementById('price-com').textContent = data.com[k];
-    document.getElementById('price-biz').textContent = data.biz[k];
-    document.getElementById('note-ind').textContent = yearly ? data.ind.noteY : data.ind.no
+    this.classList.toggle('yearly', yearly);
+    document.getElementById('lbl-monthly').classList.toggle('active', !yearly);
+    document.getElementById('lbl-yearly').classList.toggle('active', yearly);
+    var k = yearly ? 1 : 0;
+    document.getElementById('price-ind').textContent = prices.ind[k];
+    document.getElementById('price-com').textContent = prices.com[k];
+    document.getElementById('price-biz').textContent = prices.biz[k];
+    document.getElementById('note-ind').textContent = notes.ind[k];
+    document.getElementById('note-com').textContent = notes.com[k];
+    document.getElementById('note-biz').textContent = notes.biz[k];
+  });
+
+  // ── MODAL ──
+  var overlay = document.getElementById('modal-overlay');
+  var modalBody = document.getElementById('modal-body');
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+
+  function openModal(html) {
+    modalBody.innerHTML = html;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── QUOTE DATA ──
+  var quoteData = {
+    bible: [
+      { t: '"For I know the plans I have for you, plans to prosper you and not to harm you."', s: '— Jeremiah 29:11' },
+      { t: '"I can do all things through Christ who strengthens me."', s: '— Philippians 4:13' },
+      { t: '"Be strong and courageous. Do not be afraid; do not be discouraged."', s: '— Joshua 1:9' }
+    ],
+    quran: [
+      { t: '"Indeed, with hardship comes ease."', s: '— Quran 94:6' },
+      { t: '"Allah does not burden a soul beyond that it can bear."', s: '— Quran 2:286' },
+      { t: '"And He found you lost and guided you."', s: '— Quran 93:7' }
+    ],
+    stoic: [
+      { t: '"You have power over your mind, not outside events. Realize this and you will find strength."', s: '— Marcus Aurelius' },
+      { t: '"Make the best use of what is in your power, and take the rest as it happens."', s: '— Epictetus' },
+      { t: '"Waste no more time arguing about what a good person should be. Be one."', s: '— Marcus Aurelius' }
+    ],
+    life: [
+      { t: '"The secret of getting ahead is getting started."', s: '— Mark Twain' },
+      { t: '"In the middle of every difficulty lies opportunity."', s: '— Albert Einstein' },
+      { t: '"It does not matter how slowly you go as long as you do not stop."', s: '— Confucius' }
+    ],
+    success: [
+      { t: '"Success is not final, failure is not fatal: it is the courage to continue that counts."', s: '— Winston Churchill' },
+      { t: '"The only way to do great work is to love what you do."', s: '— Steve Jobs' },
+      { t: '"Don\'t watch the clock; do what it does. Keep going."', s: '— Sam Levenson' }
+    ],
+    filipino: [
+      { t: '"Ang hindi marunong lumingon sa pinanggalingan ay hindi makararating sa paroroonan."', s: '— Jose Rizal' },
+      { t: '"Kung may tiyaga, may nilaga."', s: '— Filipino Proverb' },
+      { t: '"Sa tuwid na landas, may tagumpay na naghihintay."', s: '— Filipino Proverb' }
+    ]
+  };
+  var activeCats = JSON.parse(localStorage.getItem('ls_quote_cats') || '["bible"]');
+
+  function getPreviewQuote() {
+    var pool = [];
+    for (var i = 0; i < activeCats.length; i++) {
+      var arr = quoteData[activeCats[i]];
+      if (arr) pool = pool.concat(arr);
+    }
+    if (!pool.length) return { t: 'Select a category to see a preview.', s: '' };
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function updateQuotePreview() {
+    var q = getPreviewQuote();
+    var pt = document.getElementById('qpreview-text');
+    var ps = document.getElementById('qpreview-source');
+    if (pt) pt.textContent = q.t;
+    if (ps) ps.textContent = q.s;
+    // Update pill states
+    var pills = document.querySelectorAll('.qcat');
+    for (var i = 0; i < pills.length; i++) {
+      pills[i].classList.toggle('picked', activeCats.indexOf(pills[i].getAttribute('data-cat')) > -1);
+    }
+  }
+
+  function toggleCat(cat) {
+    var idx = activeCats.indexOf(cat);
+    if (idx > -1) {
+      if (activeCats.length > 1) activeCats.splice(idx, 1);
+    } else {
+      activeCats.push(cat);
+    }
+    localStorage.setItem('ls_quote_cats', JSON.stringify(activeCats));
+    updateQuotePreview();
+  }
+
+  // ── FEATURE MODALS ──
+  function showFeature(type) {
+    var html = '';
+    if (type === 'receipt') {
+      html = '<div class="modal-header"><div class="modal-icon" style="background:var(--teal-light)"><i class="fa-solid fa-camera-retro" style="color:var(--teal-dark)"></i></div><div><h2>Auto Purchase Logging</h2><p>Zero manual entry &mdash; ever</p></div></div>'
+        + '<div class="modal-body">'
+        + '<div class="msec"><h4>How It Works</h4><p>LifeSync captures your purchases automatically through three channels so no matter how you pay, it gets logged.</p></div>'
+        + '<div class="msec"><h4>Three Ways to Log</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-camera"></i><span><strong>Receipt Photo</strong> &mdash; Snap a photo of any paper receipt. LifeSync reads the merchant, amount, date, and category instantly.</span></li>'
+        + '<li><i class="fa-solid fa-envelope"></i><span><strong>Email Forwarding</strong> &mdash; Forward any order confirmation to your LifeSync address and it is logged in seconds.</span></li>'
+        + '<li><i class="fa-solid fa-comment-sms"></i><span><strong>SMS Parsing</strong> &mdash; Bank transaction alerts are automatically read and categorized.</span></li>'
+        + '</ul></div>'
+        + '<div class="msec"><h4>What You Get</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-check"></i><span>Automatic category tagging (Food, Transport, Bills, etc.)</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Weekly and monthly spending summaries</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Budget alerts when you are close to your limit</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Export your expense history to CSV anytime</span></li>'
+        + '</ul></div>'
+        + '<button class="modal-cta" onclick="goSignup(\'individual\')">Start Logging for Free &rarr;</button>'
+        + '</div>';
+    } else if (type === 'health') {
+      html = '<div class="modal-header"><div class="modal-icon" style="background:var(--sky)"><i class="fa-solid fa-heart-pulse" style="color:var(--blue)"></i></div><div><h2>Step &amp; Health Tracking</h2><p>Your daily wellness, simplified</p></div></div>'
+        + '<div class="modal-body">'
+        + '<div class="msec"><h4>What It Tracks</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-person-walking"></i><span><strong>Daily Steps</strong> &mdash; Syncs with your phone pedometer. Set a daily goal (default: 10,000 steps).</span></li>'
+        + '<li><i class="fa-solid fa-droplet"></i><span><strong>Hydration</strong> &mdash; Log water intake and get reminders throughout the day.</span></li>'
+        + '<li><i class="fa-solid fa-moon"></i><span><strong>Sleep</strong> &mdash; Log bedtime and wake time to monitor sleep patterns.</span></li>'
+        + '<li><i class="fa-solid fa-fire"></i><span><strong>Calories Burned</strong> &mdash; Estimated based on step count and body weight.</span></li>'
+        + '</ul></div>'
+        + '<div class="msec"><h4>Reminders and Nudges</h4><p>LifeSync sends gentle nudges if you have been sitting too long, have not had water, or are falling short of your step goal.</p></div>'
+        + '<div class="msec"><h4>Weekly Health Report</h4><p>Every Monday you get steps average, best day, hydration score, and a tip for improvement.</p></div>'
+        + '<button class="modal-cta" onclick="goSignup(\'individual\')">Start Tracking for Free &rarr;</button>'
+        + '</div>';
+    } else if (type === 'quotes') {
+      var q = getPreviewQuote();
+      var pillsHtml = '';
+      var cats = [['bible','✝️ Bible'],['quran','☪️ Quran'],['stoic','🏛️ Stoic'],['life','💡 Life'],['success','🚀 Success'],['filipino','🇵🇭 Filipino']];
+      for (var i = 0; i < cats.length; i++) {
+        var picked = activeCats.indexOf(cats[i][0]) > -1 ? ' picked' : '';
+        pillsHtml += '<div class="qcat' + picked + '" data-cat="' + cats[i][0] + '" onclick="toggleCat(\'' + cats[i][0] + '\')">' + cats[i][1] + '</div>';
+      }
+      html = '<div class="modal-header"><div class="modal-icon" style="background:#FEF3C7"><i class="fa-solid fa-book-open" style="color:#B45309"></i></div><div><h2>Daily Motivational Quotes</h2><p>Choose your source of wisdom</p></div></div>'
+        + '<div class="modal-body">'
+        + '<div class="msec"><h4>Pick Your Categories</h4><p>Tap one or more. Your daily quote is drawn from your chosen categories.</p>'
+        + '<div class="qcat-wrap">' + pillsHtml + '</div></div>'
+        + '<div class="msec"><h4>Preview</h4>'
+        + '<div class="qpreview"><div class="qt" id="qpreview-text">' + q.t + '</div><div class="qs" id="qpreview-source">' + q.s + '</div></div>'
+        + '<button class="btn-try" onclick="updateQuotePreview()"><i class="fa-solid fa-rotate" style="margin-right:.3rem"></i>Try another</button>'
+        + '</div>'
+        + '<div class="msec"><h4>When You Receive It</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-check"></i><span>Every morning as your first notification</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Shown on your dashboard when you log in</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Shareable to WhatsApp, Facebook, or copied as text</span></li>'
+        + '</ul></div>'
+        + '<button class="modal-cta" onclick="goSignup(\'individual\')">Start Your Day Right &rarr;</button>'
+        + '</div>';
+    } else if (type === 'alarms') {
+      html = '<div class="modal-header"><div class="modal-icon" style="background:#FFE4E6"><i class="fa-solid fa-bell-concierge" style="color:#BE123C"></i></div><div><h2>Smart Alarms That Ring</h2><p>The alarm you cannot ignore</p></div></div>'
+        + '<div class="modal-body">'
+        + '<div class="msec"><h4>Why Regular Alarms Fail</h4><p>Normal alarms ring once, you hit snooze, and go back to sleep. LifeSync alarms escalate until you have proven you are awake.</p></div>'
+        + '<div class="msec"><h4>How Smart Alarms Work</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-bell"></i><span><strong>First Ring</strong> &mdash; Alarm sounds at your set time.</span></li>'
+        + '<li><i class="fa-solid fa-volume-high"></i><span><strong>Escalation</strong> &mdash; Not dismissed in 2 minutes? Volume increases and frequency doubles.</span></li>'
+        + '<li><i class="fa-solid fa-mobile-screen"></i><span><strong>Confirmation Required</strong> &mdash; Solve a simple math problem or shake your phone to confirm you are awake.</span></li>'
+        + '<li><i class="fa-solid fa-person-walking"></i><span><strong>Step Check (optional)</strong> &mdash; Alarm will not dismiss until you have taken 20 steps to get you out of bed.</span></li>'
+        + '</ul></div>'
+        + '<div class="msec"><h4>More Alarm Features</h4><ul class="mlist">'
+        + '<li><i class="fa-solid fa-check"></i><span>Different alarms for weekdays vs weekends</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Task-linked alarms that stop only when task is marked complete</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Gradual wake &mdash; volume slowly increases over 5 minutes</span></li>'
+        + '<li><i class="fa-solid fa-check"></i><span>Custom labels: "Take medicine", "Morning walk", "Meeting at 9"</span></li>'
+        + '</ul></div>'
+        + '<button class="modal-cta" onclick="goSignup(\'individual\')">Set Up Your First Alarm &rarr;</button>'
+        + '</div>';
+    }
+    openModal(html);
+  }
+
+  function showHow() {
+    var html = '<div class="modal-header"><div class="modal-icon" style="background:var(--teal-light)"><i class="fa-solid fa-play" style="color:var(--teal-dark)"></i></div><div><h2>How LifeSync Works</h2><p>Up and running in 3 minutes</p></div></div>'
+      + '<div class="modal-body">'
+      + '<div class="how-step"><div class="how-num">1</div><div class="how-text"><h4>Create Your Account</h4><p>Sign up with your email and pick your plan. Takes under a minute.</p></div></div>'
+      + '<div class="how-step"><div class="how-num">2</div><div class="how-text"><h4>Connect Your Channels</h4><p>Link your email or SMS for purchase logging. Enable your phone pedometer for step tracking. No extra hardware needed.</p></div></div>'
+      + '<div class="how-step"><div class="how-num">3</div><div class="how-text"><h4>Customize Your Experience</h4><p>Pick your quote source, set your daily step goal, and configure your smart alarms.</p></div></div>'
+      + '<div class="how-step"><div class="how-num">4</div><div class="how-text"><h4>Let LifeSync Run</h4><p>LifeSync works quietly in the background &mdash; logging, tracking, motivating, and alerting when it matters.</p></div></div>'
+      + '<div class="how-step"><div class="how-num">5</div><div class="how-text"><h4>Review Your Dashboard</h4><p>Check in each morning for your spending summary, step progress, daily quote, and task list.</p></div></div>'
+      + '<button class="modal-cta" onclick="goStart()">Get Started Free &rarr;</button>'
+      + '</div>';
+    openModal(html);
+  }
+</script>
+</body>
+</html>
