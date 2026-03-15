@@ -3,218 +3,183 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <!-- LifeSync Glass v1 -->
   <title>LifeSync for Business — Team Wellness & Expense Tracking</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --amber: #D97706; --amber-light: #FEF3C7; --amber-dark: #92400E;
-      --teal: #0D9488; --teal-light: #CCFBF1; --teal-dark: #0F766E;
-      --blue: #0EA5E9; --ink: #0F172A; --slate: #475569; --muted: #94A3B8;
-      --surface: #F8FAFC; --white: #FFFFFF; --border: #E2E8F0; --radius-md: 18px; --radius-lg: 28px;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 1rem 5%; background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(217,119,6,0.12); }
-    .logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.5rem; color: var(--teal-dark); letter-spacing: -0.5px; text-decoration: none; }
-    .logo span { color: var(--blue); }
-    .nav-back { display: inline-flex; align-items: center; gap: .5rem; color: var(--slate); text-decoration: none; font-size: .88rem; font-weight: 600; transition: color .2s; }
-    .nav-back:hover { color: var(--amber); }
-    .nav-btn { background: var(--amber); color: #fff; border: none; padding: .6rem 1.5rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .88rem; font-weight: 700; cursor: pointer; transition: background .2s; }
-    .nav-btn:hover { background: var(--amber-dark); }
-
-    .branch-hero { min-height: 70vh; background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 40%, #F8FAFC 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 9rem 5% 5rem; position: relative; overflow: hidden; }
-    .branch-hero::before { content: ''; position: absolute; top: -150px; right: -150px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(217,119,6,.15) 0%, transparent 65%); pointer-events: none; }
-    .branch-pill { display: inline-flex; align-items: center; gap: .5rem; background: rgba(217,119,6,.1); border: 1.5px solid rgba(217,119,6,.25); color: var(--amber-dark); border-radius: 999px; padding: .38rem 1.1rem; font-size: .78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.6rem; animation: rise .7s ease both; }
-    .branch-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; color: var(--ink); max-width: 700px; animation: rise .7s .1s ease both; }
-    .branch-hero h1 em { font-style: italic; color: var(--amber); }
-    .branch-hero p { font-size: clamp(.95rem, 1.8vw, 1.1rem); color: var(--slate); max-width: 520px; line-height: 1.7; margin: 1.4rem auto 2.4rem; animation: rise .7s .2s ease both; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: rise .7s .3s ease both; }
-    .btn-primary { background: var(--amber); color: #fff; border: none; padding: .85rem 2.2rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(217,119,6,.3); transition: background .2s, transform .15s; }
-    .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
-    .btn-ghost { background: transparent; color: var(--amber-dark); border: 2px solid var(--amber); padding: .85rem 2.2rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
-    .btn-ghost:hover { background: var(--amber); color: #fff; }
-
-    section { padding: 5rem 5%; }
-    .section-eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: .6rem; text-align: center; }
-    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -1px; color: var(--ink); text-align: center; margin-bottom: .75rem; }
-    .section-desc { color: var(--slate); font-size: .98rem; line-height: 1.65; max-width: 480px; margin: 0 auto 3rem; text-align: center; }
-
-    .pillars { background: var(--surface); }
-    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
-    .pillar-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2rem 1.6rem; text-align: center; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
-    .pillar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--amber), #FBBF24); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
-    .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(217,119,6,.1); }
-    .pillar-card:hover::before { transform: scaleX(1); }
-    .pillar-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--amber-light); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--amber-dark); margin: 0 auto 1.1rem; }
-    .pillar-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
-    .pillar-card p { font-size: .85rem; color: var(--slate); line-height: 1.55; }
-
-    .feat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; max-width: 1000px; margin: 0 auto; }
-    .feat-row { display: flex; gap: 1.2rem; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; transition: transform .2s, box-shadow .2s; }
-    .feat-row:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(217,119,6,.08); }
-    .feat-row-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-    .feat-row div h4 { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
-    .feat-row div p { font-size: .83rem; color: var(--slate); line-height: 1.55; }
-
-    .compare { background: linear-gradient(160deg, #FFFBEB 0%, #FEF3C7 100%); }
-    .compare-table { max-width: 700px; margin: 0 auto; border: 1px solid rgba(217,119,6,.2); border-radius: var(--radius-lg); overflow: hidden; }
-    .compare-row { display: grid; grid-template-columns: 1fr 1fr; }
-    .compare-row.header { background: var(--amber); color: #fff; }
-    .compare-row.header div { padding: 1rem 1.5rem; font-weight: 800; font-size: .85rem; letter-spacing: .5px; }
-    .compare-row:not(.header) { background: var(--white); border-top: 1px solid var(--border); }
-    .compare-row:not(.header) div { padding: .85rem 1.5rem; font-size: .88rem; color: var(--slate); }
-    .compare-row:not(.header) div:first-child { font-weight: 600; color: var(--ink); }
-    .compare-row:nth-child(even):not(.header) { background: var(--surface); }
-
-    .pricing-simple { background: var(--white); }
-    .price-box { max-width: 420px; margin: 0 auto; background: var(--amber-light); border: 1.5px solid rgba(217,119,6,.25); border-radius: var(--radius-lg); padding: 2.4rem 2rem; text-align: center; }
-    .price-box .plan { font-size: .72rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--amber-dark); margin-bottom: .8rem; }
-    .price-box .big { font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 700; color: var(--ink); letter-spacing: -2px; }
-    .price-box .big sup { font-size: 1.4rem; vertical-align: super; }
-    .price-box .big sub { font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--muted); }
-    .price-box .sub-note { font-size: .85rem; color: var(--slate); margin: .5rem 0 1.6rem; }
-    .price-box ul { list-style: none; text-align: left; display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1.8rem; }
-    .price-box ul li { font-size: .88rem; color: var(--slate); display: flex; align-items: center; gap: .55rem; }
-    .price-box ul li i { color: var(--amber); font-size: .7rem; }
-    .btn-full { display: block; width: 100%; background: var(--amber); color: #fff; border: none; padding: .85rem; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .2s; }
-    .btn-full:hover { background: var(--amber-dark); }
-
-    footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 2rem 5%; text-align: center; }
-    footer .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.3rem; color: #CCFBF1; text-decoration: none; display: inline-block; margin-bottom: .6rem; }
-    footer .footer-logo span { color: #5EEAD4; }
-    footer p { font-size: .82rem; margin-bottom: .4rem; }
-    footer a { color: #CCFBF1; text-decoration: none; }
-
-    @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 768px) { .hero-btns { flex-direction: column; align-items: center; } .compare-row { grid-template-columns: 1fr; } .compare-row.header div:last-child { display: none; } }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#020B18;--cyan:#00D4FF;--gold:#FFD700;--teal:#0D9488;--white:#FFFFFF;--off-white:#E2EEF7;--muted:#6B8CA8;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.09);--glass-hover:rgba(255,255,255,.08);}
+    html{scroll-behavior:smooth;}
+    body{font-family:"Outfit",sans-serif;background:var(--bg);color:var(--off-white);overflow-x:hidden;}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 10%,rgba(255,215,0,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 85% 80%,rgba(0,212,255,.06) 0%,transparent 60%);}
+    *{position:relative;z-index:1;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(2,11,24,.7);backdrop-filter:blur(24px);border-bottom:1px solid var(--glass-border);}
+    .logo{font-weight:900;font-size:1.5rem;color:var(--white);letter-spacing:-1px;text-decoration:none;}
+    .logo span{color:var(--cyan);}
+    .nav-back{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:600;transition:color .2s;}
+    .nav-back:hover{color:var(--gold);}
+    .nav-right{display:flex;align-items:center;gap:.75rem;}
+    .nav-link{font-size:.85rem;font-weight:600;color:var(--muted);text-decoration:none;transition:color .2s;}
+    .nav-link:hover{color:var(--gold);}
+    .nav-btn{background:linear-gradient(135deg,var(--gold),#F59E0B);color:var(--bg);border:none;padding:.6rem 1.5rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.88rem;font-weight:800;cursor:pointer;box-shadow:0 0 20px rgba(255,215,0,.25);}
+    .branch-hero{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 5% 5rem;}
+    .branch-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);color:var(--gold);border-radius:999px;padding:.38rem 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.6rem;animation:rise .7s ease both;}
+    .branch-hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--white);max-width:700px;animation:rise .7s .1s ease both;}
+    .branch-hero h1 em{font-style:italic;font-family:"Instrument Serif",serif;background:linear-gradient(90deg,var(--gold),#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .branch-hero p{font-size:clamp(.95rem,1.8vw,1.1rem);color:var(--muted);max-width:520px;line-height:1.7;margin:1.4rem auto 2.4rem;animation:rise .7s .2s ease both;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:rise .7s .3s ease both;}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),#F59E0B);color:var(--bg);border:none;padding:.85rem 2.2rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 0 28px rgba(255,215,0,.3);transition:transform .15s,opacity .2s;text-decoration:none;display:inline-block;}
+    .btn-primary:hover{transform:translateY(-2px);opacity:.9;}
+    .btn-outline{background:var(--glass);backdrop-filter:blur(10px);color:var(--gold);border:1px solid rgba(255,215,0,.3);padding:.85rem 2.2rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block;}
+    .btn-outline:hover{background:rgba(255,215,0,.1);}
+    section{padding:5rem 5%;}
+    .section-eyebrow{font-size:.65rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;text-align:center;}
+    .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;letter-spacing:-1.5px;color:var(--white);text-align:center;margin-bottom:.75rem;}
+    .section-desc{color:var(--muted);font-size:.98rem;line-height:1.65;max-width:480px;margin:0 auto 3rem;text-align:center;}
+    .pillars{background:rgba(255,215,0,.02);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);}
+    .pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;max-width:1000px;margin:0 auto;}
+    .pillar-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;padding:2rem 1.6rem;text-align:center;transition:transform .25s,border-color .25s;}
+    .pillar-card:hover{transform:translateY(-4px);border-color:rgba(255,215,0,.2);}
+    .pillar-icon{width:50px;height:50px;border-radius:14px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--gold);margin:0 auto 1.1rem;}
+    .pillar-card h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem;}
+    .pillar-card p{font-size:.83rem;color:var(--muted);line-height:1.55;}
+    .feat-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;max-width:1000px;margin:0 auto;}
+    .feat-row{display:flex;gap:1.2rem;align-items:flex-start;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:18px;padding:1.4rem;transition:transform .2s,border-color .2s;}
+    .feat-row:hover{transform:translateY(-3px);border-color:rgba(255,215,0,.2);}
+    .feat-row-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:var(--glass);border:1px solid var(--glass-border);}
+    .feat-row div h4{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.3rem;}
+    .feat-row div p{font-size:.83rem;color:var(--muted);line-height:1.55;}
+    .compare{background:rgba(255,215,0,.02);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);}
+    .compare-table{max-width:700px;margin:0 auto;background:var(--glass);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,.15);border-radius:20px;overflow:hidden;}
+    .compare-row{display:grid;grid-template-columns:1fr 1fr;}
+    .compare-row.header{background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(245,158,11,.08));}
+    .compare-row.header div{padding:1rem 1.5rem;font-weight:800;font-size:.82rem;color:var(--gold);}
+    .compare-row:not(.header){border-top:1px solid var(--glass-border);}
+    .compare-row:not(.header) div{padding:.82rem 1.5rem;font-size:.86rem;color:var(--muted);}
+    .compare-row:not(.header) div:first-child{font-weight:700;color:var(--white);}
+    .pricing-simple{background:transparent;}
+    .price-box{max-width:420px;margin:0 auto;background:var(--glass);backdrop-filter:blur(24px);border:1px solid rgba(255,215,0,.15);border-radius:24px;padding:2.4rem 2rem;text-align:center;}
+    .plan-label{font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+    .big{font-size:3.5rem;font-weight:900;color:var(--white);letter-spacing:-2px;}
+    .big sup{font-size:1.4rem;vertical-align:super;}
+    .big sub{font-size:1rem;color:var(--muted);}
+    .sub-note{font-size:.82rem;color:var(--muted);margin:.5rem 0 .5rem;}
+    .trial-tag{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.2);color:var(--gold);font-size:.72rem;font-weight:800;padding:.25rem .65rem;border-radius:999px;display:inline-block;margin-bottom:1.5rem;}
+    .price-box ul{list-style:none;text-align:left;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.8rem;}
+    .price-box ul li{font-size:.86rem;color:var(--muted);display:flex;align-items:center;gap:.55rem;}
+    .price-box ul li i{color:var(--gold);font-size:.65rem;}
+    .btn-full{display:block;width:100%;background:linear-gradient(135deg,var(--gold),#F59E0B);color:var(--bg);border:none;padding:.88rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 0 24px rgba(255,215,0,.25);transition:opacity .2s;}
+    .btn-full:hover{opacity:.9;}
+    footer{background:rgba(2,11,24,.9);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);padding:2rem 5%;text-align:center;}
+    .footer-logo{font-weight:900;font-size:1.3rem;color:var(--white);text-decoration:none;display:inline-block;margin-bottom:.6rem;letter-spacing:-1px;}
+    .footer-logo span{color:var(--cyan);}
+    .footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:.8rem;}
+    .footer-links a{font-size:.82rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+    .footer-links a:hover{color:var(--gold);}
+    footer p{font-size:.82rem;color:var(--muted);margin-bottom:.3rem;}
+    footer a.mail{color:var(--gold);text-decoration:none;}
+    @keyframes rise{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){.hero-btns{flex-direction:column;align-items:center;}.compare-row{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
-
 <nav>
-  <a href="lifesync.html" class="logo">Life<span>Sync</span></a>
-  <a href="lifesync.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-  <button class="nav-btn">Start Free Trial</button>
+  <a href="index.html" class="logo">Life<span>Sync</span></a>
+  <a href="index.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Back</a>
+  <div class="nav-right" id="nav-right">
+    <a href="login.html" class="nav-link">Log in</a>
+    <button class="nav-btn" onclick="goCta()">Start Free Trial</button>
+  </div>
 </nav>
-
 <section class="branch-hero">
   <div class="branch-pill"><i class="fa-solid fa-briefcase"></i>&nbsp; For Business</div>
   <h1>Your Team,<br><em>Healthier &amp; Smarter</em></h1>
-  <p>LifeSync for Business brings team wellness monitoring, expense tracking, and productivity analytics into one dashboard — built for teams up to 10.</p>
+  <p>Team wellness monitoring, expense tracking, and productivity analytics in one glass dashboard &mdash; built for teams up to 10.</p>
   <div class="hero-btns">
-    <button class="btn-primary"><i class="fa-solid fa-rocket" style="margin-right:.45rem"></i>Start for $99/mo</button>
-    <button class="btn-ghost">See All Features</button>
+    <a href="#" class="btn-primary" id="cta-hero"><i class="fa-solid fa-gift" style="margin-right:.45rem"></i>Start Free Trial</a>
+    <a href="#features" class="btn-outline">See All Features</a>
   </div>
 </section>
-
-<section class="pillars">
+<section class="pillars" id="pillars">
   <p class="section-eyebrow">Core Pillars</p>
   <h2 class="section-title">What LifeSync Business Does</h2>
   <p class="section-desc">Three powerful systems working together for your team.</p>
   <div class="pillars-grid">
-    <div class="pillar-card">
-      <div class="pillar-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-      <h3>Team Wellness</h3>
-      <p>Track step counts, health goals, and activity levels across your whole team. Spot burnout before it happens.</p>
-    </div>
-    <div class="pillar-card">
-      <div class="pillar-icon"><i class="fa-solid fa-receipt"></i></div>
-      <h3>Expense Tracking</h3>
-      <p>Auto-log team expenses via email, SMS, or receipt photos. Shared budgets with real-time visibility.</p>
-    </div>
-    <div class="pillar-card">
-      <div class="pillar-icon"><i class="fa-solid fa-chart-pie"></i></div>
-      <h3>Productivity Analytics</h3>
-      <p>Department-level goal tracking and reporting to help managers make data-informed decisions.</p>
-    </div>
-    <div class="pillar-card">
-      <div class="pillar-icon"><i class="fa-solid fa-bell-concierge"></i></div>
-      <h3>Smart Alarms</h3>
-      <p>Meeting reminders and deadline alarms that escalate until confirmed — no more missed check-ins.</p>
-    </div>
+    <div class="pillar-card"><div class="pillar-icon"><i class="fa-solid fa-heart-pulse"></i></div><h3>Team Wellness</h3><p>Track step counts, health goals, and activity levels across your whole team.</p></div>
+    <div class="pillar-card"><div class="pillar-icon"><i class="fa-solid fa-receipt"></i></div><h3>Expense Tracking</h3><p>Auto-log team expenses via email, SMS, or receipt photos with shared budgets.</p></div>
+    <div class="pillar-card"><div class="pillar-icon"><i class="fa-solid fa-chart-pie"></i></div><h3>Productivity Analytics</h3><p>Department-level goal tracking and reporting for data-informed decisions.</p></div>
+    <div class="pillar-card"><div class="pillar-icon"><i class="fa-solid fa-bell-concierge"></i></div><h3>Smart Alarms</h3><p>Meeting reminders and deadline alarms that escalate until confirmed.</p></div>
   </div>
 </section>
-
-<section>
+<section id="features">
   <p class="section-eyebrow">Features</p>
   <h2 class="section-title">Everything in One Place</h2>
-  <p class="section-desc">Built for small teams that want enterprise-level visibility without enterprise complexity.</p>
+  <p class="section-desc">Enterprise-level visibility without enterprise complexity.</p>
   <div class="feat-list">
-    <div class="feat-row">
-      <div class="feat-row-icon" style="background:var(--amber-light)"><i class="fa-solid fa-users" style="color:var(--amber-dark)"></i></div>
-      <div><h4>Team Dashboard</h4><p>A bird's-eye view of your entire team's wellness scores, task completion, and expense activity.</p></div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon" style="background:var(--amber-light)"><i class="fa-solid fa-wallet" style="color:var(--amber-dark)"></i></div>
-      <div><h4>Shared Budget Tracking</h4><p>Set department budgets, track spend in real time, and get alerts before you go over.</p></div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon bg-teal"><i class="fa-solid fa-person-running" style="color:var(--teal-dark)"></i></div>
-      <div><h4>Wellness Monitoring</h4><p>Aggregate step counts and health goal completion across the team with weekly summaries.</p></div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon" style="background:var(--amber-light)"><i class="fa-solid fa-building" style="color:var(--amber-dark)"></i></div>
-      <div><h4>Department Reporting</h4><p>Generate performance and wellness reports per department. Export to PDF or CSV.</p></div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon bg-teal"><i class="fa-solid fa-shield-halved" style="color:var(--teal-dark)"></i></div>
-      <div><h4>Role-Based Access</h4><p>Admins see everything; team members only see their own data. Privacy built in by default.</p></div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon" style="background:var(--amber-light)"><i class="fa-solid fa-quote-left" style="color:var(--amber-dark)"></i></div>
-      <div><h4>Team Motivational Quotes</h4><p>Broadcast a daily quote to the whole team each morning. Small habit, big culture shift.</p></div>
-    </div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-users" style="color:var(--gold)"></i></div><div><h4>Team Dashboard</h4><p>Bird's-eye view of wellness scores, task completion, and expense activity.</p></div></div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-wallet" style="color:var(--gold)"></i></div><div><h4>Shared Budget Tracking</h4><p>Set department budgets, track spend in real time, and get alerts before you go over.</p></div></div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-person-running" style="color:var(--cyan)"></i></div><div><h4>Wellness Monitoring</h4><p>Aggregate step counts and health goal completion with weekly team summaries.</p></div></div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-building" style="color:var(--gold)"></i></div><div><h4>Department Reporting</h4><p>Generate performance and wellness reports per department. Export to PDF or CSV.</p></div></div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-shield-halved" style="color:var(--cyan)"></i></div><div><h4>Role-Based Access</h4><p>Admins see everything; team members only see their own data.</p></div></div>
+    <div class="feat-row"><div class="feat-row-icon"><i class="fa-solid fa-quote-left" style="color:var(--gold)"></i></div><div><h4>Team Motivational Quotes</h4><p>Broadcast a daily quote to the whole team each morning.</p></div></div>
   </div>
 </section>
-
-<section class="compare">
-  <p class="section-eyebrow">Plan Comparison</p>
-  <h2 class="section-title">How Business Compares</h2>
-  <p class="section-desc">See exactly what's different between Individual, Communities, and Business plans.</p>
+<section class="compare" id="compare">
+  <p class="section-eyebrow">Plan Details</p>
+  <h2 class="section-title">What Is Included</h2>
+  <p class="section-desc">Everything in one flat rate &mdash; no per-seat surprises.</p>
   <div class="compare-table">
-    <div class="compare-row header">
-      <div>Feature</div>
-      <div>Business Plan</div>
-    </div>
-    <div class="compare-row"><div>Users included</div><div>Up to 10</div></div>
+    <div class="compare-row header"><div>Feature</div><div>Business Plan</div></div>
+    <div class="compare-row"><div>Users included</div><div>Up to 10 (after trial)</div></div>
     <div class="compare-row"><div>Expense tracking</div><div>Shared team budgets</div></div>
     <div class="compare-row"><div>Wellness monitoring</div><div>Individual + team aggregate</div></div>
     <div class="compare-row"><div>Reporting</div><div>Department-level, exportable</div></div>
     <div class="compare-row"><div>Admin accounts</div><div>Up to 3 admins</div></div>
-    <div class="compare-row"><div>Smart alarms</div><div>Team-wide &amp; personal</div></div>
+    <div class="compare-row"><div>Smart alarms</div><div>Team-wide and personal</div></div>
     <div class="compare-row"><div>Daily quotes</div><div>Team broadcast included</div></div>
   </div>
 </section>
-
-<section class="pricing-simple">
+<section class="pricing-simple" id="pricing">
   <p class="section-eyebrow">Pricing</p>
   <h2 class="section-title">One Flat Rate for Your Team</h2>
   <p class="section-desc">No per-seat pricing. Up to 10 users, one bill.</p>
   <div class="price-box">
-    <p class="plan">LifeSync Business</p>
-    <div class="big"><sup>$</sup>99<sub>/mo</sub></div>
-    <p class="sub-note">Flat rate · Up to 10 users · Cancel anytime</p>
+    <p class="plan-label">LifeSync Business</p>
+    <div class="big"><sup>$</sup>49<sub>/mo</sub></div>
+    <p class="sub-note">Flat rate &middot; Up to 10 users &middot; Cancel anytime</p>
+    <span class="trial-tag"><i class="fa-solid fa-gift" style="margin-right:.3rem"></i>14-day free trial &mdash; no card needed</span>
     <ul>
       <li><i class="fa-solid fa-check"></i> Team wellness &amp; activity dashboard</li>
       <li><i class="fa-solid fa-check"></i> Shared expense &amp; budget tracking</li>
       <li><i class="fa-solid fa-check"></i> Productivity &amp; goal analytics</li>
       <li><i class="fa-solid fa-check"></i> Department-level reporting</li>
       <li><i class="fa-solid fa-check"></i> Smart alarms for the whole team</li>
-      <li><i class="fa-solid fa-check"></i> Up to 10 accounts · 3 admins</li>
+      <li><i class="fa-solid fa-check"></i> Up to 10 accounts &middot; 3 admins</li>
     </ul>
-    <button class="btn-full">Get Started Now</button>
+    <button class="btn-full" id="cta-pricing">Start 14-Day Free Trial</button>
   </div>
 </section>
-
 <footer>
-  <a href="lifesync.html" class="footer-logo">Life<span>Sync</span></a>
-  <p>© 2026 LifeSync. All rights reserved.</p>
-  <p><a href="mailto:hello@lifesync.app">hello@lifesync.app</a> &nbsp;·&nbsp; +63 917 000 0000</p>
+  <a href="index.html" class="footer-logo">Life<span>Sync</span></a>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="lifesync-individuals.html">Individuals</a>
+    <a href="lifesync-communities.html">Communities</a>
+    <a href="login.html">Log In</a>
+    <a href="signup.html">Sign Up</a>
+  </div>
+  <p>&copy; 2026 LifeSync. All rights reserved.</p>
+  <p><a class="mail" href="mailto:aaroncafranca5@gmail.com">aaroncafranca5@gmail.com</a> &nbsp;&middot;&nbsp; +63 994 778 3035</p>
 </footer>
-
+<script>
+  function getCtaHref(plan){var fp=(function(){var s=[navigator.userAgent,navigator.language,screen.width+"x"+screen.height,screen.colorDepth,new Date().getTimezoneOffset()].join("|");var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h|0;}return Math.abs(h).toString(36);})();var used=JSON.parse(localStorage.getItem("ls_trial_devices")||"[]");var tu=used.indexOf(fp)>-1;var li=!!localStorage.getItem("ls_user");var paid=localStorage.getItem("ls_paid")==="true";if(li&&paid)return"dashboard.html";if(li)return"checkout.html?plan="+plan;if(tu)return"signup.html?plan="+plan+"&trial_used=1";return"signup.html?plan="+plan;}
+  function goCta(){window.location.href=getCtaHref("business");}
+  document.getElementById("cta-hero").href=getCtaHref("business");
+  document.getElementById("cta-pricing").onclick=function(){window.location.href=getCtaHref("business");};
+  var u=JSON.parse(localStorage.getItem("ls_user")||"null");
+  if(u){document.getElementById("nav-right").innerHTML="<a href='dashboard.html' class='nav-link'>Dashboard</a><button class='nav-btn' onclick="window.location.href='dashboard.html'">My Account</button>";}
+</script>
 </body>
 </html>

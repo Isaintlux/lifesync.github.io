@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <!-- LifeSync Glass v1 -->
+  <title>Checkout — LifeSync</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#020B18;--cyan:#00D4FF;--teal:#0D9488;--white:#FFFFFF;--off-white:#E2EEF7;--muted:#6B8CA8;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.09);--red:#FF4D6A;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--off-white);min-height:100vh;display:flex;flex-direction:column;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 20% 30%,rgba(0,212,255,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(13,148,136,.06) 0%,transparent 60%);}
+    *{position:relative;z-index:1;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5%;background:rgba(2,11,24,.7);backdrop-filter:blur(24px);border-bottom:1px solid var(--glass-border);}
+    .logo{font-weight:900;font-size:1.4rem;color:var(--white);text-decoration:none;letter-spacing:-1px;}
+    .logo span{color:var(--cyan);}
+    .secure-badge{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--muted);font-weight:600;}
+    .secure-badge i{color:var(--cyan);}
+    .page{flex:1;display:flex;justify-content:center;padding:2.5rem 5%;gap:2rem;flex-wrap:wrap;align-items:flex-start;}
+    .panel{background:rgba(5,15,32,.8);backdrop-filter:blur(32px);border:1px solid var(--glass-border);border-radius:24px;padding:2.2rem;}
+    .payment-form{width:100%;max-width:460px;}
+    .order-summary{width:100%;max-width:320px;height:fit-content;}
+    .section-label{font-size:.68rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:1.2rem;}
+    .billing-tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;}
+    .billing-tab{flex:1;text-align:center;padding:.65rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--muted);transition:all .2s;}
+    .billing-tab.active{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.3);color:var(--cyan);}
+    .form-group{margin-bottom:1.2rem;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-row-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1rem;}
+    label{display:block;font-size:.78rem;font-weight:700;color:var(--off-white);margin-bottom:.4rem;}
+    input,select{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--glass-border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;}
+    input::placeholder{color:var(--muted);}
+    select option{background:var(--bg);color:var(--white);}
+    input:focus,select:focus{border-color:rgba(0,212,255,.45);box-shadow:0 0 0 3px rgba(0,212,255,.1);}
+    input.error{border-color:var(--red);}
+    .error-msg{font-size:.73rem;color:var(--red);margin-top:.3rem;display:none;}
+    .error-msg.show{display:block;}
+    .card-input-wrap{position:relative;}
+    .card-input-wrap input{padding-right:3rem;letter-spacing:1px;}
+    .card-icons{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);display:flex;gap:.3rem;}
+    .card-icons img{height:18px;opacity:.4;transition:opacity .2s;}
+    .card-icons img.active{opacity:1;}
+    .btn-pay{width:100%;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg);border:none;padding:1rem;border-radius:999px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:opacity .2s,transform .15s;box-shadow:0 0 32px rgba(0,212,255,.35);display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:1.5rem;}
+    .btn-pay:hover{opacity:.9;transform:translateY(-1px);}
+    .btn-pay:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+    .pay-note{font-size:.73rem;color:var(--muted);text-align:center;margin-top:.8rem;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+    .order-title{font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.4px;}
+    .plan-summary{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;}
+    .plan-summary .ps-name{font-weight:800;color:var(--cyan);font-size:.92rem;margin-bottom:.2rem;}
+    .plan-summary .ps-desc{font-size:.75rem;color:var(--muted);}
+    .order-line{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;color:var(--muted);padding:.5rem 0;border-bottom:1px solid var(--glass-border);}
+    .order-line:last-of-type{border-bottom:none;}
+    .order-line.total{font-weight:800;color:var(--white);font-size:.92rem;margin-top:.4rem;padding-top:.8rem;border-top:1px solid var(--glass-border);border-bottom:none;}
+    .order-features{margin-top:1.2rem;list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+    .order-features li{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;}
+    .order-features li i{color:var(--cyan);font-size:.65rem;}
+    .trial-upgrade-note{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:12px;padding:.75rem 1rem;font-size:.8rem;color:var(--cyan);margin-bottom:1.2rem;font-weight:600;}
+    .processing{display:none;position:fixed;inset:0;background:rgba(2,11,24,.8);backdrop-filter:blur(8px);z-index:999;align-items:center;justify-content:center;}
+    .processing.show{display:flex;}
+    .processing-card{background:rgba(5,15,32,.95);backdrop-filter:blur(32px);border:1px solid var(--glass-border);border-radius:24px;padding:2.8rem 2.4rem;text-align:center;max-width:360px;width:90%;}
+    .spinner{width:52px;height:52px;border:3px solid var(--glass-border);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.5rem;box-shadow:0 0 20px rgba(0,212,255,.2);}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .processing-card h3{font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:.5rem;}
+    .processing-card p{font-size:.88rem;color:var(--muted);}
+    .success-overlay{display:none;position:fixed;inset:0;background:rgba(2,11,24,.8);backdrop-filter:blur(8px);z-index:999;align-items:center;justify-content:center;}
+    .success-overlay.show{display:flex;}
+    .success-card{background:rgba(5,15,32,.95);backdrop-filter:blur(32px);border:1px solid rgba(0,212,255,.2);border-radius:24px;padding:2.8rem 2.4rem;text-align:center;max-width:380px;width:90%;box-shadow:0 0 60px rgba(0,212,255,.1);}
+    .success-icon{width:72px;height:72px;border-radius:50%;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.8rem;color:var(--cyan);}
+    .success-card h2{font-size:1.6rem;font-weight:900;color:var(--white);margin-bottom:.5rem;letter-spacing:-1px;}
+    .success-card p{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1.8rem;}
+    .btn-dash{display:block;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg);padding:.9rem 2rem;border-radius:999px;font-weight:800;font-size:.95rem;text-decoration:none;box-shadow:0 0 24px rgba(0,212,255,.3);}
+    @media(max-width:600px){.form-row-3{grid-template-columns:1fr 1fr;}.order-summary{max-width:100%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Life<span>Sync</span></a>
+  <div class="secure-badge"><i class="fa-solid fa-lock"></i> Secure Checkout (Demo)</div>
+</nav>
+<div class="page">
+  <div class="panel payment-form">
+    <div class="trial-upgrade-note" id="upgrade-note" style="display:none;"><i class="fa-solid fa-gift" style="margin-right:.4rem"></i>You are upgrading from your 14-day free trial. Your subscription starts today.</div>
+    <p class="section-label">Billing Cycle</p>
+    <div class="billing-tabs">
+      <div class="billing-tab active" id="tab-monthly" onclick="setBilling('monthly')">Monthly</div>
+      <div class="billing-tab" id="tab-yearly" onclick="setBilling('yearly')">Yearly <span style="font-size:.68rem;background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2);padding:.1rem .4rem;border-radius:999px;margin-left:.3rem;">Save 11%</span></div>
+    </div>
+    <p class="section-label">Card Information</p>
+    <div class="form-group">
+      <label>Card Number</label>
+      <div class="card-input-wrap">
+        <input type="text" id="card-num" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
+        <div class="card-icons">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" id="icon-visa" alt="Visa"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" id="icon-mc" alt="MC"/>
+        </div>
+      </div>
+      <div class="error-msg" id="card-err">Enter a valid 16-digit card number</div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label>Name on Card</label><input type="text" id="card-name" placeholder="Aaron Cruz"/><div class="error-msg" id="name-err">Required</div></div>
+      <div class="form-group"><label>Expiry</label><input type="text" id="expiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"/><div class="error-msg" id="exp-err">Invalid</div></div>
+      <div class="form-group"><label>CVV</label><input type="text" id="cvv" placeholder="123" maxlength="4"/><div class="error-msg" id="cvv-err">Invalid</div></div>
+    </div>
+    <p class="section-label" style="margin-top:.5rem">Billing Address</p>
+    <div class="form-group"><label>Country</label><select id="country"><option value="PH">Philippines</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="SG">Singapore</option></select></div>
+    <div class="form-row">
+      <div class="form-group"><label>City</label><input type="text" id="city" placeholder="Manila"/></div>
+      <div class="form-group"><label>ZIP Code</label><input type="text" id="zip" placeholder="1000"/></div>
+    </div>
+    <button class="btn-pay" id="pay-btn" onclick="handlePay()"><i class="fa-solid fa-lock"></i><span id="pay-label">Subscribe Now</span></button>
+    <p class="pay-note"><i class="fa-solid fa-shield-halved"></i> This is a simulated payment. No real charge will occur.</p>
+  </div>
+  <div class="panel order-summary">
+    <h3 class="order-title">Order Summary</h3>
+    <div class="plan-summary"><div class="ps-name" id="sum-plan">LifeSync Individual</div><div class="ps-desc" id="sum-cycle">Billed monthly</div></div>
+    <div class="order-line"><span>Plan</span><span id="sum-price">$7.00</span></div>
+    <div class="order-line"><span>Tax</span><span>$0.00</span></div>
+    <div class="order-line total"><span>Total</span><span id="sum-total">$7.00</span></div>
+    <ul class="order-features" id="sum-features">
+      <li><i class="fa-solid fa-check"></i> Auto purchase logging</li>
+      <li><i class="fa-solid fa-check"></i> Step &amp; health tracking</li>
+      <li><i class="fa-solid fa-check"></i> Daily motivational quotes</li>
+      <li><i class="fa-solid fa-check"></i> Smart alarms</li>
+      <li><i class="fa-solid fa-check"></i> Cancel anytime</li>
+    </ul>
+  </div>
+</div>
+<div class="processing" id="processing"><div class="processing-card"><div class="spinner"></div><h3>Processing...</h3><p>Please wait, do not close this page.</p></div></div>
+<div class="success-overlay" id="success-overlay"><div class="success-card"><div class="success-icon"><i class="fa-solid fa-check"></i></div><h2>Subscribed!</h2><p>Your LifeSync subscription is now active. Welcome to the full experience.</p><a href="dashboard.html" class="btn-dash">Go to Dashboard &rarr;</a></div></div>
+<script>
+  var plans={individual:{name:'LifeSync Individual',mo:7,yr:75,features:['Auto purchase logging','Step & health tracking','Daily motivational quotes','Smart alarms','Cancel anytime']},communities:{name:'LifeSync Communities',mo:15,yr:150,features:['Complaint portal','Real-time tracking','DTI reporting','5 admin accounts','Cancel anytime']},business:{name:'LifeSync Business',mo:49,yr:490,features:['Team wellness dashboard','Shared expense tracking','Dept. reporting','Up to 10 users','Cancel anytime']}};
+  var billing='monthly';
+  var urlPlan=new URLSearchParams(window.location.search).get('plan')||localStorage.getItem('ls_trial_plan')||'individual';
+  var plan=plans[urlPlan]||plans.individual;
+  if(localStorage.getItem('ls_trial_plan')){document.getElementById('upgrade-note').style.display='block';}
+  function updateSummary(){var price=billing==='monthly'?plan.mo:plan.yr;document.getElementById('sum-plan').textContent=plan.name;document.getElementById('sum-cycle').textContent=billing==='monthly'?'Billed monthly':'Billed yearly';document.getElementById('sum-price').textContent='$'+price.toFixed(2);document.getElementById('sum-total').textContent='$'+price.toFixed(2);document.getElementById('pay-label').textContent='Subscribe - $'+price.toFixed(2)+'/mo';var feats=document.getElementById('sum-features');feats.innerHTML=plan.features.map(function(f){return'<li><i class="fa-solid fa-check"></i> '+f+'</li>';}).join('');}
+  function setBilling(type){billing=type;document.getElementById('tab-monthly').classList.toggle('active',type==='monthly');document.getElementById('tab-yearly').classList.toggle('active',type==='yearly');updateSummary();}
+  function formatCard(inp){var v=inp.value.replace(/\D/g,'').substring(0,16);inp.value=v.replace(/(.{4})/g,'$1 ').trim();document.getElementById('icon-visa').classList.toggle('active',v.startsWith('4'));document.getElementById('icon-mc').classList.toggle('active',/^5[1-5]/.test(v));}
+  function formatExpiry(inp){var v=inp.value.replace(/\D/g,'');if(v.length>=2)v=v.substring(0,2)+'/'+v.substring(2,4);inp.value=v;}
+  function handlePay(){var cn=document.getElementById('card-num').value.replace(/\s/g,'');var nm=document.getElementById('card-name').value;var ex=document.getElementById('expiry').value;var cv=document.getElementById('cvv').value;var ok=true;if(cn.length!==16){document.getElementById('card-num').classList.add('error');document.getElementById('card-err').classList.add('show');ok=false;}else{document.getElementById('card-num').classList.remove('error');document.getElementById('card-err').classList.remove('show');}if(!nm.trim()){document.getElementById('card-name').classList.add('error');document.getElementById('name-err').classList.add('show');ok=false;}else{document.getElementById('card-name').classList.remove('error');document.getElementById('name-err').classList.remove('show');}if(!/^\d{2}\/\d{2}$/.test(ex)){document.getElementById('expiry').classList.add('error');document.getElementById('exp-err').classList.add('show');ok=false;}else{document.getElementById('expiry').classList.remove('error');document.getElementById('exp-err').classList.remove('show');}if(cv.length<3){document.getElementById('cvv').classList.add('error');document.getElementById('cvv-err').classList.add('show');ok=false;}else{document.getElementById('cvv').classList.remove('error');document.getElementById('cvv-err').classList.remove('show');}if(!ok)return;document.getElementById('processing').classList.add('show');setTimeout(function(){document.getElementById('processing').classList.remove('show');localStorage.setItem('ls_paid','true');localStorage.setItem('ls_billing',billing);document.getElementById('success-overlay').classList.add('show');},2500);}
+  updateSummary();
+</script>
+</body>
+</html>
