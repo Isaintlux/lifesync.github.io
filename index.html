@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <!-- LifeSync Glass v1 -->
+  <!-- LifeSync Glass v2 -->
   <title>LifeSync — Your Intelligent Life Assistant</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -12,62 +12,75 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #020B18;
-      --bg2:       #050F20;
-      --cyan:      #00D4FF;
-      --cyan-dim:  #00A8CC;
-      --cyan-glow: rgba(0,212,255,.18);
-      --teal:      #0D9488;
-      --teal-glow: rgba(13,148,136,.2);
-      --white:     #FFFFFF;
-      --off-white: #E2EEF7;
-      --muted:     #6B8CA8;
-      --glass:     rgba(255,255,255,.04);
-      --glass-border: rgba(255,255,255,.09);
-      --glass-hover:  rgba(255,255,255,.08);
-      --glass-strong: rgba(255,255,255,.10);
+      --bg:         #080808;
+      --bg2:        #0D0D0D;
+      --glass:      rgba(255,255,255,.045);
+      --glass-b:    rgba(255,255,255,.08);
+      --glass-h:    rgba(255,255,255,.07);
+      --border:     rgba(255,255,255,.07);
+      --border-h:   rgba(255,255,255,.14);
+      --white:      #FFFFFF;
+      --dim:        rgba(255,255,255,.55);
+      --muted:      rgba(255,255,255,.3);
+      --cyan:       #00D4FF;
+      --cyan-glow:  rgba(0,212,255,.2);
+      --teal:       #00B4A0;
     }
 
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Outfit', sans-serif;
       background: var(--bg);
-      color: var(--off-white);
+      color: var(--white);
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* ── BACKGROUND ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(0,212,255,.12) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(13,148,136,.1) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(0,60,120,.15) 0%, transparent 70%);
+    /* ── FLOATING ORBS (CSS-only, no JS) ── */
+    .orbs {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; overflow: hidden;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.18), rgba(30,30,40,.9) 60%, rgba(10,10,15,.95));
+      box-shadow:
+        inset 4px 4px 12px rgba(255,255,255,.12),
+        inset -4px -4px 12px rgba(0,0,0,.6),
+        0 8px 40px rgba(0,0,0,.7);
+      animation: float linear infinite;
+    }
+    .orb:nth-child(1){width:260px;height:260px;top:-60px;left:-80px;animation-duration:22s;animation-delay:0s;opacity:.7;}
+    .orb:nth-child(2){width:180px;height:180px;top:20%;right:-40px;animation-duration:18s;animation-delay:-6s;opacity:.55;}
+    .orb:nth-child(3){width:120px;height:120px;top:55%;left:8%;animation-duration:25s;animation-delay:-10s;opacity:.45;}
+    .orb:nth-child(4){width:320px;height:320px;bottom:-100px;right:-80px;animation-duration:30s;animation-delay:-4s;opacity:.65;}
+    .orb:nth-child(5){width:90px;height:90px;top:35%;left:45%;animation-duration:20s;animation-delay:-14s;opacity:.4;}
+    .orb:nth-child(6){width:150px;height:150px;bottom:25%;left:30%;animation-duration:24s;animation-delay:-8s;opacity:.5;}
+    .orb:nth-child(7){width:70px;height:70px;top:70%;right:25%;animation-duration:16s;animation-delay:-2s;opacity:.38;}
+
+    @keyframes float {
+      0%   { transform: translateY(0px) translateX(0px) rotate(0deg); }
+      25%  { transform: translateY(-18px) translateX(8px) rotate(90deg); }
+      50%  { transform: translateY(-8px) translateX(-12px) rotate(180deg); }
+      75%  { transform: translateY(-22px) translateX(6px) rotate(270deg); }
+      100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
     }
 
-    /* ── NOISE TEXTURE ── */
-    body::after {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    /* ── SUBTLE NOISE ── */
+    .noise {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     * { position: relative; z-index: 1; }
 
-    /* ── GLASS MIXIN ── */
-    .glass {
+    /* ── GLASS PANEL ── */
+    .glass-panel {
       background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-    }
-    .glass-strong {
-      background: var(--glass-strong);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border);
     }
 
     /* ── NAV ── */
@@ -75,339 +88,318 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 999;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 5%;
-      background: rgba(2,11,24,.7);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--glass-border);
+      background: rgba(8,8,8,.6);
+      backdrop-filter: blur(30px) saturate(150%);
+      -webkit-backdrop-filter: blur(30px) saturate(150%);
+      border-bottom: 1px solid var(--border);
     }
     .logo {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 900; font-size: 1.5rem;
-      color: var(--white); letter-spacing: -1px; text-decoration: none;
+      font-weight: 900; font-size: 1.45rem; color: var(--white);
+      letter-spacing: -1px; text-decoration: none;
     }
     .logo span { color: var(--cyan); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      text-decoration: none; font-size: .88rem; font-weight: 500;
+      text-decoration: none; font-size: .85rem; font-weight: 500;
       color: var(--muted); transition: color .2s;
     }
-    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a:hover { color: var(--white); }
     .nav-right { display: flex; align-items: center; gap: .75rem; }
     .nav-login {
-      font-size: .85rem; font-weight: 600; color: var(--muted);
+      font-size: .84rem; font-weight: 500; color: var(--muted);
       text-decoration: none; transition: color .2s;
     }
-    .nav-login:hover { color: var(--cyan); }
+    .nav-login:hover { color: var(--white); }
     .btn-nav {
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); border: none; padding: .55rem 1.4rem;
-      border-radius: 999px; font-family: 'Outfit', sans-serif;
-      font-size: .85rem; font-weight: 700; cursor: pointer;
-      transition: opacity .2s, transform .15s;
-      box-shadow: 0 0 20px rgba(0,212,255,.3);
+      background: var(--glass-b);
+      backdrop-filter: blur(10px);
+      color: var(--white); border: 1px solid var(--border-h);
+      padding: .55rem 1.3rem; border-radius: 999px;
+      font-family: 'Outfit', sans-serif; font-size: .84rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, border-color .2s;
     }
-    .btn-nav:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-nav:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; padding: 9rem 5% 6rem;
-      overflow: hidden;
     }
     .hero-pill {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(0,212,255,.08);
-      border: 1px solid rgba(0,212,255,.25);
-      color: var(--cyan); border-radius: 999px;
-      padding: .38rem 1.1rem; font-size: .75rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border-h);
+      color: var(--dim); border-radius: 999px;
+      padding: .35rem 1rem; font-size: .72rem; font-weight: 600;
       letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2rem;
-      animation: rise .7s ease both;
+      animation: rise .8s ease both;
     }
+    .hero-pill i { color: var(--cyan); }
+
     .hero h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.6rem, 6vw, 5rem);
-      font-weight: 900; line-height: 1.05; letter-spacing: -2px;
-      color: var(--white); max-width: 820px;
-      animation: rise .7s .1s ease both;
+      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+      font-weight: 900; line-height: 1.02; letter-spacing: -3px;
+      color: var(--white); max-width: 860px;
+      animation: rise .8s .1s ease both;
     }
     .hero h1 em {
       font-style: italic; font-family: 'Instrument Serif', serif;
-      background: linear-gradient(90deg, var(--cyan), #5FF0FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-weight: 400; letter-spacing: -2px;
+      color: var(--dim);
     }
+
     .hero-sub {
-      font-size: clamp(.95rem, 1.8vw, 1.15rem);
-      color: var(--muted); max-width: 540px; line-height: 1.7;
-      margin: 1.6rem auto 2.8rem; font-weight: 400;
-      animation: rise .7s .2s ease both;
+      font-size: clamp(.9rem, 1.6vw, 1.1rem);
+      color: var(--muted); max-width: 500px;
+      line-height: 1.75; margin: 1.8rem auto 3rem;
+      font-weight: 400; animation: rise .8s .2s ease both;
     }
+
     .hero-actions {
       display: flex; gap: 1rem; flex-wrap: wrap;
-      justify-content: center; margin-bottom: 4rem;
-      animation: rise .7s .3s ease both;
+      justify-content: center; margin-bottom: 5rem;
+      animation: rise .8s .3s ease both;
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); border: none; padding: .9rem 2.4rem;
-      border-radius: 999px; font-family: 'Outfit', sans-serif;
-      font-size: .95rem; font-weight: 800; cursor: pointer;
-      box-shadow: 0 0 32px rgba(0,212,255,.35);
-      transition: transform .15s, box-shadow .2s, opacity .2s;
+      background: var(--white); color: var(--bg);
+      border: none; padding: .85rem 2.2rem; border-radius: 999px;
+      font-family: 'Outfit', sans-serif; font-size: .92rem; font-weight: 800;
+      cursor: pointer; transition: opacity .2s, transform .15s;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(0,212,255,.5); }
-    .btn-outline {
-      background: var(--glass); backdrop-filter: blur(20px);
-      color: var(--cyan); border: 1px solid rgba(0,212,255,.35);
-      padding: .9rem 2.4rem; border-radius: 999px;
-      font-family: 'Outfit', sans-serif; font-size: .95rem; font-weight: 700;
-      cursor: pointer; transition: background .2s, transform .15s;
+    .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
+    .btn-ghost {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      color: var(--dim); border: 1px solid var(--border-h);
+      padding: .85rem 2.2rem; border-radius: 999px;
+      font-family: 'Outfit', sans-serif; font-size: .92rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, color .2s, transform .15s;
     }
-    .btn-outline:hover { background: rgba(0,212,255,.1); transform: translateY(-2px); }
+    .btn-ghost:hover { background: var(--glass-h); color: var(--white); transform: translateY(-2px); }
 
     /* ── ICON GRID ── */
     .icon-grid {
       display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1rem; max-width: 580px; width: 100%;
-      animation: rise .7s .45s ease both;
+      gap: 1rem; max-width: 560px; width: 100%;
+      animation: rise .8s .45s ease both;
     }
     .ig-card {
-      background: var(--glass); backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 18px; padding: 1.4rem .9rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.4rem .9rem;
       display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      cursor: pointer; transition: background .25s, border-color .25s, transform .25s;
+      cursor: pointer;
+      transition: background .25s, border-color .25s, transform .25s;
     }
     .ig-card:hover {
-      background: var(--glass-hover);
-      border-color: rgba(0,212,255,.3);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(0,212,255,.12);
+      background: var(--glass-h); border-color: var(--border-h);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.5);
     }
     .ig-card:active { transform: scale(.97); }
-    .ig-card i { font-size: 1.5rem; }
-    .ig-card span { font-size: .68rem; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.3; }
-    .ig-tap { font-size: .55rem !important; color: var(--cyan) !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: .5px; }
+    .ig-card i { font-size: 1.4rem; }
+    .ig-card .ig-label { font-size: .66rem; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.3; }
+    .ig-card .ig-tap { font-size: .52rem; color: rgba(255,255,255,.2); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 
     /* ── SECTIONS ── */
-    section { padding: 6rem 5%; }
+    section { padding: 7rem 5%; }
     .section-eyebrow {
-      font-size: .68rem; font-weight: 800; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--cyan);
+      font-size: .62rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--muted);
       margin-bottom: .6rem; text-align: center;
     }
     .section-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 900; letter-spacing: -1.5px;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 900; letter-spacing: -2px;
       color: var(--white); text-align: center;
-      margin-bottom: .75rem; line-height: 1.1;
+      margin-bottom: .75rem; line-height: 1.05;
     }
     .section-title em {
       font-style: italic; font-family: 'Instrument Serif', serif;
-      background: linear-gradient(90deg, var(--cyan), #5FF0FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-weight: 400; color: var(--dim);
     }
     .section-desc {
-      color: var(--muted); font-size: .98rem; line-height: 1.65;
-      max-width: 480px; margin: 0 auto 3.5rem; text-align: center;
+      color: var(--muted); font-size: .92rem; line-height: 1.7;
+      max-width: 440px; margin: 0 auto 4rem; text-align: center;
     }
 
     /* ── FEATURES ── */
-    .features { background: transparent; }
     .feat-grid {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
-      gap: 1.4rem; max-width: 1080px; margin: 0 auto;
+      gap: 1px; max-width: 1000px; margin: 0 auto;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 24px; overflow: hidden;
     }
     .feat-card {
-      background: var(--glass); backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 22px; padding: 2rem 1.8rem;
-      cursor: pointer; transition: background .25s, border-color .25s, transform .25s;
-      position: relative; overflow: hidden;
+      background: var(--bg2);
+      padding: 2.2rem 2rem; cursor: pointer;
+      transition: background .25s;
+      position: relative;
     }
-    .feat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      opacity: 0; transition: opacity .3s;
+    .feat-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: var(--glass-h); opacity: 0;
+      transition: opacity .25s;
     }
-    .feat-card:hover {
-      background: var(--glass-hover); border-color: rgba(0,212,255,.25);
-      transform: translateY(-6px);
-      box-shadow: 0 16px 48px rgba(0,212,255,.1);
-    }
-    .feat-card:hover::before { opacity: 1; }
+    .feat-card:hover { background: rgba(255,255,255,.03); }
+    .feat-card:hover::after { opacity: 1; }
     .feat-icon {
-      width: 52px; height: 52px; border-radius: 14px;
+      width: 44px; height: 44px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 1.2rem;
-      border: 1px solid var(--glass-border);
+      font-size: 1.2rem; margin-bottom: 1.2rem;
+      background: var(--glass-b); border: 1px solid var(--border);
     }
-    .feat-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: .5rem; }
-    .feat-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
-    .feat-more { display: inline-block; margin-top: .8rem; font-size: .78rem; font-weight: 700; color: var(--cyan); }
+    .feat-card h3 { font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: .45rem; }
+    .feat-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .feat-more { display: inline-block; margin-top: .8rem; font-size: .75rem; font-weight: 600; color: rgba(255,255,255,.25); transition: color .2s; }
+    .feat-card:hover .feat-more { color: var(--dim); }
 
     /* ── BRANCHES ── */
     .solutions {
-      background: rgba(0,212,255,.02);
-      border-top: 1px solid var(--glass-border);
-      border-bottom: 1px solid var(--glass-border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .branch-grid {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(290px,1fr));
-      gap: 1.6rem; max-width: 1080px; margin: 0 auto;
+      gap: 1.5rem; max-width: 1080px; margin: 0 auto;
     }
     .branch-card {
-      background: var(--glass); backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border);
       border-radius: 24px; padding: 2.2rem 2rem;
       display: flex; flex-direction: column;
       transition: background .25s, border-color .25s, transform .25s;
     }
     .branch-card:hover {
-      background: var(--glass-hover);
-      border-color: rgba(0,212,255,.2);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,212,255,.08);
+      background: var(--glass-h); border-color: var(--border-h);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
     .branch-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
     .branch-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
-      background: var(--glass); border: 1px solid var(--glass-border);
+      width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+      background: var(--glass-b); border: 1px solid var(--border-h);
     }
     .branch-badge {
-      font-size: .65rem; font-weight: 800; letter-spacing: 1.5px;
-      text-transform: uppercase; padding: .3rem .75rem; border-radius: 999px;
-      background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.2);
-      color: var(--cyan);
+      font-size: .62rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: .28rem .7rem; border-radius: 999px;
+      background: rgba(255,255,255,.06); border: 1px solid var(--border-h);
+      color: var(--dim);
     }
-    .branch-card h3 { font-size: 1.15rem; font-weight: 800; color: var(--white); margin-bottom: .5rem; letter-spacing: -.4px; }
-    .branch-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; flex: 1; }
-    .branch-features { list-style: none; margin: 1.2rem 0 1.8rem; display: flex; flex-direction: column; gap: .45rem; }
-    .branch-features li { font-size: .82rem; color: var(--muted); display: flex; align-items: flex-start; gap: .5rem; }
-    .branch-features li i { color: var(--cyan); font-size: .65rem; margin-top: .25rem; flex-shrink: 0; }
+    .branch-card h3 { font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: .5rem; letter-spacing: -.5px; }
+    .branch-card p { font-size: .85rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .branch-features { list-style: none; margin: 1.1rem 0 1.8rem; display: flex; flex-direction: column; gap: .42rem; }
+    .branch-features li { font-size: .8rem; color: var(--muted); display: flex; align-items: flex-start; gap: .5rem; }
+    .branch-features li i { color: var(--dim); font-size: .6rem; margin-top: .25rem; flex-shrink: 0; }
     .btn-learn {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--glass); backdrop-filter: blur(10px);
-      color: var(--cyan); border: 1px solid rgba(0,212,255,.3);
-      border-radius: 999px; padding: .6rem 1.4rem;
-      font-size: .85rem; font-weight: 700;
+      background: var(--glass-b); backdrop-filter: blur(10px);
+      color: var(--dim); border: 1px solid var(--border-h);
+      border-radius: 999px; padding: .6rem 1.3rem;
+      font-size: .82rem; font-weight: 600;
       font-family: 'Outfit', sans-serif; text-decoration: none;
-      transition: background .2s, transform .15s; width: fit-content;
+      transition: background .2s, color .2s, transform .15s; width: fit-content;
     }
-    .btn-learn:hover { background: rgba(0,212,255,.12); transform: translateY(-1px); }
+    .btn-learn:hover { background: rgba(255,255,255,.1); color: var(--white); transform: translateY(-1px); }
 
     /* ── PRICING ── */
-    .pricing { background: transparent; }
     .pricing-toggle {
       display: flex; align-items: center; justify-content: center;
-      gap: 1rem; margin-bottom: 3rem;
+      gap: 1rem; margin-bottom: 3.5rem;
     }
-    .toggle-label { font-size: .88rem; font-weight: 600; color: var(--muted); transition: color .2s; }
+    .toggle-label { font-size: .85rem; font-weight: 500; color: var(--muted); transition: color .2s; }
     .toggle-label.active { color: var(--white); }
     .toggle-track {
-      width: 52px; height: 28px; border-radius: 999px;
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      cursor: pointer; position: relative; border: none;
-      box-shadow: 0 0 16px rgba(0,212,255,.3);
+      width: 48px; height: 26px; border-radius: 999px;
+      background: rgba(255,255,255,.15); cursor: pointer; position: relative;
+      border: 1px solid var(--border-h); outline: none;
     }
     .toggle-thumb {
-      position: absolute; top: 4px; left: 4px;
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--bg); transition: transform .25s; pointer-events: none;
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--white); transition: transform .25s; pointer-events: none;
     }
-    .toggle-track.yearly .toggle-thumb { transform: translateX(24px); }
+    .toggle-track.yearly .toggle-thumb { transform: translateX(22px); }
     .save-badge {
-      background: rgba(0,212,255,.1); color: var(--cyan);
-      border: 1px solid rgba(0,212,255,.2);
-      font-size: .68rem; font-weight: 800; letter-spacing: 1px;
-      text-transform: uppercase; padding: .25rem .6rem; border-radius: 999px;
+      background: rgba(255,255,255,.06); color: var(--dim);
+      border: 1px solid var(--border-h);
+      font-size: .65rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: .22rem .55rem; border-radius: 999px;
     }
     .pricing-grid {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 1.6rem; max-width: 1080px; margin: 0 auto;
+      gap: 1.5rem; max-width: 1080px; margin: 0 auto;
     }
     .price-card {
-      background: var(--glass); backdrop-filter: blur(24px);
-      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border);
       border-radius: 24px; padding: 2.2rem 2rem;
       display: flex; flex-direction: column;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
+      transition: transform .25s, border-color .25s;
       position: relative; overflow: hidden;
     }
-    .price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,212,255,.1); border-color: rgba(0,212,255,.2); }
+    .price-card:hover { transform: translateY(-5px); border-color: var(--border-h); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
     .price-card.featured {
-      background: linear-gradient(145deg, rgba(0,212,255,.1), rgba(13,148,136,.08));
-      border-color: rgba(0,212,255,.35);
-      box-shadow: 0 0 40px rgba(0,212,255,.15);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.14);
     }
-    .price-card.featured:hover { box-shadow: 0 20px 60px rgba(0,212,255,.25); }
-    .featured-ribbon {
+    .price-card.featured:hover { box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+    .feat-ribbon {
       position: absolute; top: 1.4rem; right: -2.5rem;
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); font-size: .6rem; font-weight: 900;
+      background: rgba(255,255,255,.12); backdrop-filter: blur(10px);
+      border: 1px solid var(--border-h);
+      color: var(--dim); font-size: .58rem; font-weight: 800;
       letter-spacing: 1.5px; text-transform: uppercase;
-      padding: .28rem 3rem; transform: rotate(35deg);
+      padding: .26rem 3rem; transform: rotate(35deg);
     }
-    .price-plan { font-size: .68rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: .8rem; color: var(--cyan); }
+    .price-plan { font-size: .62rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: .8rem; color: var(--muted); }
     .price-amount { display: flex; align-items: flex-end; gap: .3rem; margin-bottom: .3rem; }
     .price-amount .currency { font-size: 1.3rem; font-weight: 700; line-height: 1.7; color: var(--white); }
     .price-amount .amount { font-size: 3.2rem; font-weight: 900; line-height: 1; letter-spacing: -2px; color: var(--white); }
-    .price-amount .period { font-size: .82rem; color: var(--muted); margin-bottom: .4rem; }
-    .price-annual-note { font-size: .75rem; color: var(--muted); margin-bottom: .5rem; min-height: 1.1rem; }
-    .trial-note { font-size: .72rem; font-weight: 700; color: var(--cyan); margin-bottom: 1.2rem; }
-    .price-desc { font-size: .85rem; color: var(--muted); line-height: 1.55; margin-bottom: 1.3rem; }
-    .price-divider { border: none; border-top: 1px solid var(--glass-border); margin-bottom: 1.3rem; }
+    .price-amount .period { font-size: .8rem; color: var(--muted); margin-bottom: .45rem; }
+    .price-annual-note { font-size: .72rem; color: var(--muted); margin-bottom: .4rem; min-height: 1rem; }
+    .trial-note { font-size: .7rem; font-weight: 600; color: var(--dim); margin-bottom: 1.2rem; }
+    .price-desc { font-size: .83rem; color: var(--muted); line-height: 1.55; margin-bottom: 1.3rem; }
+    .price-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.3rem; }
     .price-features { list-style: none; display: flex; flex-direction: column; gap: .55rem; flex: 1; margin-bottom: 1.8rem; }
-    .price-features li { font-size: .84rem; color: var(--muted); display: flex; align-items: flex-start; gap: .55rem; }
-    .price-features li i { color: var(--cyan); font-size: .65rem; margin-top: .25rem; flex-shrink: 0; }
+    .price-features li { font-size: .82rem; color: var(--muted); display: flex; align-items: flex-start; gap: .55rem; }
+    .price-features li i { color: var(--dim); font-size: .62rem; margin-top: .26rem; flex-shrink: 0; }
     .btn-price {
       display: block; text-align: center; border-radius: 999px;
-      padding: .8rem 1.5rem; font-size: .9rem; font-weight: 700;
+      padding: .78rem 1.5rem; font-size: .88rem; font-weight: 700;
       font-family: 'Outfit', sans-serif; cursor: pointer; border: none;
-      text-decoration: none; transition: transform .15s, box-shadow .2s;
+      text-decoration: none; transition: background .2s, transform .15s;
     }
-    .btn-price-cyan {
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); box-shadow: 0 0 24px rgba(0,212,255,.3);
+    .btn-price-white { background: var(--white); color: var(--bg); }
+    .btn-price-white:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-price-glass {
+      background: var(--glass-b); color: var(--dim);
+      border: 1px solid var(--border-h);
     }
-    .btn-price-cyan:hover { transform: translateY(-1px); box-shadow: 0 0 36px rgba(0,212,255,.45); }
-    .btn-price-outline {
-      background: var(--glass); color: var(--cyan);
-      border: 1px solid rgba(0,212,255,.3) !important;
-    }
-    .btn-price-outline:hover { background: rgba(0,212,255,.1); transform: translateY(-1px); }
+    .btn-price-glass:hover { background: rgba(255,255,255,.1); color: var(--white); transform: translateY(-1px); }
 
     /* ── CTA STRIP ── */
     .cta-strip {
-      padding: 6rem 5%; text-align: center;
-      background: linear-gradient(145deg, rgba(0,212,255,.06), rgba(13,148,136,.04));
-      border-top: 1px solid var(--glass-border);
-      border-bottom: 1px solid var(--glass-border);
+      border-top: 1px solid var(--border);
+      padding: 7rem 5%; text-align: center;
     }
     .cta-strip h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 900; letter-spacing: -1.5px; color: var(--white); margin-bottom: .75rem;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 900; letter-spacing: -2px; color: var(--white); margin-bottom: .75rem; line-height: 1.05;
     }
-    .cta-strip p { color: var(--muted); font-size: 1rem; max-width: 440px; margin: 0 auto 2rem; line-height: 1.6; }
-    .btn-glow {
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); border: none; padding: .95rem 2.6rem;
-      border-radius: 999px; font-family: 'Outfit', sans-serif;
-      font-size: 1rem; font-weight: 800; cursor: pointer;
-      box-shadow: 0 0 40px rgba(0,212,255,.4);
-      transition: transform .15s, box-shadow .2s;
-    }
-    .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,212,255,.55); }
+    .cta-strip h2 em { font-style: italic; font-family: 'Instrument Serif', serif; font-weight: 400; color: var(--dim); }
+    .cta-strip p { color: var(--muted); font-size: .92rem; max-width: 400px; margin: 0 auto 2.5rem; line-height: 1.7; }
 
     /* ── FOOTER ── */
     footer {
-      background: rgba(2,11,24,.9); backdrop-filter: blur(20px);
-      border-top: 1px solid var(--glass-border);
+      border-top: 1px solid var(--border);
+      background: rgba(5,5,5,.8); backdrop-filter: blur(20px);
       padding: 4rem 5% 2rem; color: var(--muted);
     }
     .footer-inner {
@@ -415,128 +407,121 @@
       display: grid; grid-template-columns: 2fr 1fr 1fr;
       gap: 3rem; margin-bottom: 2.5rem;
     }
-    .footer-logo { font-weight: 900; font-size: 1.4rem; color: var(--white); display: block; margin-bottom: .8rem; text-decoration: none; letter-spacing: -1px; }
+    .footer-logo { font-weight: 900; font-size: 1.3rem; color: var(--white); display: block; margin-bottom: .8rem; text-decoration: none; letter-spacing: -1px; }
     .footer-logo span { color: var(--cyan); }
-    .footer-brand p { font-size: .85rem; line-height: 1.65; max-width: 280px; }
-    footer h4 { font-size: .68rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 1rem; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-    .footer-links a { text-decoration: none; color: var(--muted); font-size: .88rem; transition: color .2s; }
-    .footer-links a:hover { color: var(--cyan); }
-    .footer-contact { display: flex; flex-direction: column; gap: .55rem; }
-    .footer-contact span { font-size: .88rem; display: flex; align-items: center; gap: .6rem; }
-    .footer-contact i { color: var(--cyan); width: 16px; }
+    .footer-brand p { font-size: .82rem; line-height: 1.65; max-width: 280px; }
+    footer h4 { font-size: .6rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-links a { text-decoration: none; color: var(--muted); font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact { display: flex; flex-direction: column; gap: .5rem; }
+    .footer-contact span { font-size: .85rem; display: flex; align-items: center; gap: .6rem; }
+    .footer-contact i { color: var(--dim); width: 14px; }
     .footer-bottom {
       max-width: 1080px; margin: 0 auto;
-      border-top: 1px solid var(--glass-border);
+      border-top: 1px solid var(--border);
       padding-top: 1.5rem;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
     }
-    .footer-bottom p { font-size: .82rem; }
-    .social-links { display: flex; gap: .75rem; }
+    .footer-bottom p { font-size: .78rem; }
+    .social-links { display: flex; gap: .7rem; }
     .social-links a {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: var(--glass); border: 1px solid var(--glass-border);
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--glass-b); border: 1px solid var(--border);
       color: var(--muted); display: flex; align-items: center; justify-content: center;
-      text-decoration: none; font-size: .82rem;
+      text-decoration: none; font-size: .8rem;
       transition: background .2s, color .2s, border-color .2s;
     }
-    .social-links a:hover { background: rgba(0,212,255,.15); color: var(--cyan); border-color: rgba(0,212,255,.3); }
+    .social-links a:hover { background: var(--glass-h); color: var(--white); border-color: var(--border-h); }
 
     /* ── MODAL ── */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(2,11,24,.8);
-      backdrop-filter: blur(8px); z-index: 9999;
-      display: flex; align-items: flex-end; justify-content: center;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.75); backdrop-filter: blur(12px);
+      z-index: 9999; display: flex; align-items: flex-end; justify-content: center;
       opacity: 0; pointer-events: none; transition: opacity .25s;
     }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal-sheet {
-      background: rgba(5,15,32,.95); backdrop-filter: blur(32px);
-      border: 1px solid var(--glass-border);
+      background: rgba(12,12,12,.95);
+      backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--border-h);
       border-radius: 28px 28px 0 0; width: 100%; max-width: 600px;
       max-height: 88vh; overflow-y: auto;
       transform: translateY(60px); transition: transform .3s;
       position: relative;
     }
     .modal-overlay.open .modal-sheet { transform: translateY(0); }
-    .modal-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--glass-border); margin: 1rem auto .5rem; }
+    .modal-handle { width: 36px; height: 3px; border-radius: 2px; background: var(--border-h); margin: 1rem auto .5rem; }
     .modal-close {
       position: absolute; top: .8rem; right: 1.2rem;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-      font-size: .82rem; color: var(--muted); display: flex; align-items: center; justify-content: center;
+      background: var(--glass-b); border: 1px solid var(--border);
+      width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+      font-size: .78rem; color: var(--muted); display: flex; align-items: center; justify-content: center;
       transition: color .2s, border-color .2s;
     }
-    .modal-close:hover { color: var(--cyan); border-color: rgba(0,212,255,.3); }
-    .modal-header { padding: 1rem 1.5rem 1.2rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 1rem; }
-    .modal-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; background: var(--glass); border: 1px solid var(--glass-border); }
-    .modal-header h2 { font-size: 1.2rem; font-weight: 800; color: var(--white); letter-spacing: -.4px; }
-    .modal-header p { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+    .modal-close:hover { color: var(--white); border-color: var(--border-h); }
+    .modal-header { padding: 1rem 1.5rem 1.2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
+    .modal-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; background: var(--glass-b); border: 1px solid var(--border-h); }
+    .modal-header h2 { font-size: 1.15rem; font-weight: 800; color: var(--white); letter-spacing: -.5px; }
+    .modal-header p { font-size: .78rem; color: var(--muted); margin-top: .1rem; }
     .modal-body { padding: 1.5rem; }
     .msec { margin-bottom: 1.5rem; }
-    .msec h4 { font-size: .68rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: .7rem; }
-    .msec p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+    .msec h4 { font-size: .6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: .7rem; }
+    .msec p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
     .mlist { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-    .mlist li { font-size: .86rem; color: var(--muted); display: flex; align-items: flex-start; gap: .6rem; line-height: 1.5; }
-    .mlist li i { color: var(--cyan); font-size: .7rem; margin-top: .22rem; flex-shrink: 0; }
+    .mlist li { font-size: .84rem; color: var(--muted); display: flex; align-items: flex-start; gap: .6rem; line-height: 1.5; }
+    .mlist li i { color: var(--dim); font-size: .65rem; margin-top: .24rem; flex-shrink: 0; }
     .modal-cta {
-      display: block; width: 100%;
-      background: linear-gradient(135deg, var(--cyan), var(--teal));
-      color: var(--bg); border: none; padding: .9rem; border-radius: 999px;
-      font-family: 'Outfit', sans-serif; font-size: .95rem; font-weight: 800;
-      cursor: pointer; margin-top: 1.5rem; transition: opacity .2s, transform .15s;
-      text-align: center; box-shadow: 0 0 24px rgba(0,212,255,.3);
+      display: block; width: 100%; background: var(--white); color: var(--bg);
+      border: none; padding: .88rem; border-radius: 999px;
+      font-family: 'Outfit', sans-serif; font-size: .92rem; font-weight: 800;
+      cursor: pointer; margin-top: 1.5rem; transition: opacity .2s;
+      text-align: center;
     }
-    .modal-cta:hover { opacity: .9; transform: translateY(-1px); }
-    .how-step { display: flex; gap: 1rem; align-items: flex-start; padding: .9rem 0; border-bottom: 1px solid var(--glass-border); }
+    .modal-cta:hover { opacity: .85; }
+    .how-step { display: flex; gap: 1rem; align-items: flex-start; padding: .9rem 0; border-bottom: 1px solid var(--border); }
     .how-step:last-of-type { border-bottom: none; }
-    .how-num {
-      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.25);
-      color: var(--cyan); font-weight: 800; font-size: .9rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .how-text h4 { font-size: .9rem; font-weight: 700; color: var(--white); margin-bottom: .2rem; }
-    .how-text p { font-size: .82rem; color: var(--muted); line-height: 1.55; }
+    .how-num { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: var(--glass-b); border: 1px solid var(--border-h); color: var(--dim); font-weight: 800; font-size: .88rem; display: flex; align-items: center; justify-content: center; }
+    .how-text h4 { font-size: .88rem; font-weight: 700; color: var(--white); margin-bottom: .2rem; }
+    .how-text p { font-size: .8rem; color: var(--muted); line-height: 1.55; }
     .qcat-wrap { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
-    .qcat {
-      padding: .4rem .9rem; border-radius: 999px;
-      border: 1px solid var(--glass-border); font-size: .8rem; font-weight: 700;
-      color: var(--muted); cursor: pointer; background: var(--glass);
-      transition: all .15s; user-select: none;
-    }
-    .qcat.picked { border-color: rgba(0,212,255,.4); background: rgba(0,212,255,.1); color: var(--cyan); }
-    .qpreview {
-      background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(13,148,136,.06));
-      border: 1px solid rgba(0,212,255,.2);
-      border-radius: 16px; padding: 1.2rem 1.4rem; margin-top: 1rem;
-    }
+    .qcat { padding: .38rem .85rem; border-radius: 999px; border: 1px solid var(--border); font-size: .78rem; font-weight: 600; color: var(--muted); cursor: pointer; background: var(--glass-b); transition: all .15s; user-select: none; }
+    .qcat.picked { border-color: var(--border-h); background: rgba(255,255,255,.08); color: var(--white); }
+    .qpreview { background: var(--glass-b); border: 1px solid var(--border-h); border-radius: 16px; padding: 1.2rem 1.4rem; margin-top: 1rem; }
     .qpreview .qt { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1rem; color: var(--white); line-height: 1.55; margin-bottom: .4rem; }
-    .qpreview .qs { font-size: .72rem; color: var(--muted); font-weight: 600; }
-    .btn-try {
-      background: var(--glass); border: 1px solid rgba(0,212,255,.25);
-      color: var(--cyan); border-radius: 999px; padding: .4rem 1rem;
-      font-size: .78rem; font-weight: 700; cursor: pointer;
-      font-family: 'Outfit', sans-serif; margin-top: .7rem;
-      transition: background .15s;
-    }
-    .btn-try:hover { background: rgba(0,212,255,.1); }
+    .qpreview .qs { font-size: .7rem; color: var(--muted); font-weight: 600; }
+    .btn-try { background: var(--glass-b); border: 1px solid var(--border-h); color: var(--dim); border-radius: 999px; padding: .38rem .9rem; font-size: .76rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; margin-top: .7rem; transition: background .15s; }
+    .btn-try:hover { background: var(--glass-h); color: var(--white); }
 
-    @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .icon-grid { grid-template-columns: repeat(2,1fr); max-width: 340px; }
+      .icon-grid { grid-template-columns: repeat(2,1fr); max-width: 320px; }
       .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 480px) {
       .hero-actions { flex-direction: column; align-items: center; }
-      .btn-primary, .btn-outline { width: 100%; max-width: 300px; text-align: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
     }
   </style>
 </head>
 <body>
+
+<!-- ORBS -->
+<div class="orbs">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+<div class="noise"></div>
 
 <nav>
   <a href="index.html" class="logo">Life<span>Sync</span></a>
@@ -555,60 +540,60 @@
 <section class="hero">
   <div class="hero-pill"><i class="fa-solid fa-bolt"></i>&nbsp; AI-Powered Life Assistant</div>
   <h1>LifeSync &mdash;<br><em>Your Intelligent</em><br>Life Assistant</h1>
-  <p class="hero-sub">Automatically log purchases, track your health, stay motivated, and never miss a task. Start with a 14-day free trial &mdash; no card required.</p>
+  <p class="hero-sub">Automatically log purchases, track your health, stay motivated, and never miss a task. 14-day free trial &mdash; no card required.</p>
   <div class="hero-actions">
-    <button class="btn-primary" onclick="goStart()"><i class="fa-solid fa-gift" style="margin-right:.45rem"></i>Start Free Trial</button>
-    <button class="btn-outline" onclick="showHow()"><i class="fa-solid fa-play" style="margin-right:.45rem"></i>See How It Works</button>
+    <button class="btn-primary" onclick="goStart()"><i class="fa-solid fa-gift" style="margin-right:.4rem"></i>Start Free Trial</button>
+    <button class="btn-ghost" onclick="showHow()"><i class="fa-solid fa-play" style="margin-right:.4rem"></i>See How It Works</button>
   </div>
   <div class="icon-grid">
     <div class="ig-card" onclick="showFeature('receipt')">
-      <i class="fa-solid fa-receipt" style="color:var(--cyan)"></i>
-      <span>Receipt &amp; Purchase Logging</span>
+      <i class="fa-solid fa-receipt" style="color:rgba(255,255,255,.7)"></i>
+      <span class="ig-label">Receipt &amp; Purchase Logging</span>
       <span class="ig-tap">tap to learn</span>
     </div>
     <div class="ig-card" onclick="showFeature('health')">
-      <i class="fa-solid fa-person-walking" style="color:#5FF0FF"></i>
-      <span>Step &amp; Health Tracking</span>
+      <i class="fa-solid fa-person-walking" style="color:rgba(255,255,255,.7)"></i>
+      <span class="ig-label">Step &amp; Health Tracking</span>
       <span class="ig-tap">tap to learn</span>
     </div>
     <div class="ig-card" onclick="showFeature('quotes')">
-      <i class="fa-solid fa-quote-left" style="color:#FFD700"></i>
-      <span>Daily Motivational Quotes</span>
+      <i class="fa-solid fa-quote-left" style="color:rgba(255,255,255,.7)"></i>
+      <span class="ig-label">Daily Motivational Quotes</span>
       <span class="ig-tap">tap to learn</span>
     </div>
     <div class="ig-card" onclick="showFeature('alarms')">
-      <i class="fa-solid fa-bell" style="color:#FF6B9D"></i>
-      <span>Smart Alarms &amp; Tasks</span>
+      <i class="fa-solid fa-bell" style="color:rgba(255,255,255,.7)"></i>
+      <span class="ig-label">Smart Alarms &amp; Tasks</span>
       <span class="ig-tap">tap to learn</span>
     </div>
   </div>
 </section>
 
-<section class="features" id="features">
+<section id="features">
   <p class="section-eyebrow">Core Features</p>
-  <h2 class="section-title">Everything You Need, <em>Built In</em></h2>
+  <h2 class="section-title">Everything You Need,<br><em>Built In</em></h2>
   <p class="section-desc">Four powerful pillars designed to simplify your daily life &mdash; all synced intelligently.</p>
   <div class="feat-grid">
     <div class="feat-card" onclick="showFeature('receipt')">
-      <div class="feat-icon" style="background:rgba(0,212,255,.08)"><i class="fa-solid fa-camera-retro" style="color:var(--cyan)"></i></div>
+      <div class="feat-icon"><i class="fa-solid fa-camera-retro" style="color:var(--dim)"></i></div>
       <h3>Auto Purchase Logging</h3>
       <p>Snap a receipt, forward an email, or let LifeSync read your SMS. Every expense logged automatically.</p>
       <span class="feat-more">Learn more &rarr;</span>
     </div>
     <div class="feat-card" onclick="showFeature('health')">
-      <div class="feat-icon" style="background:rgba(95,240,255,.08)"><i class="fa-solid fa-heart-pulse" style="color:#5FF0FF"></i></div>
+      <div class="feat-icon"><i class="fa-solid fa-heart-pulse" style="color:var(--dim)"></i></div>
       <h3>Step &amp; Goal Tracking</h3>
       <p>Monitor daily steps, hydration, and health goals with gentle reminders and weekly reports.</p>
       <span class="feat-more">Learn more &rarr;</span>
     </div>
     <div class="feat-card" onclick="showFeature('quotes')">
-      <div class="feat-icon" style="background:rgba(255,215,0,.08)"><i class="fa-solid fa-book-open" style="color:#FFD700"></i></div>
+      <div class="feat-icon"><i class="fa-solid fa-book-open" style="color:var(--dim)"></i></div>
       <h3>Daily Motivational Quotes</h3>
-      <p>Choose from Bible, Quran, Stoic philosophy, Filipino wisdom, and more. Fully customizable.</p>
+      <p>Choose from Bible, Quran, Stoic, Filipino wisdom, and more. Fully customizable per taste.</p>
       <span class="feat-more">Learn more &rarr;</span>
     </div>
     <div class="feat-card" onclick="showFeature('alarms')">
-      <div class="feat-icon" style="background:rgba(255,107,157,.08)"><i class="fa-solid fa-bell-concierge" style="color:#FF6B9D"></i></div>
+      <div class="feat-icon"><i class="fa-solid fa-bell-concierge" style="color:var(--dim)"></i></div>
       <h3>Smart Alarms That Ring</h3>
       <p>Escalating alarms that require confirmation. You literally cannot ignore them.</p>
       <span class="feat-more">Learn more &rarr;</span>
@@ -618,12 +603,12 @@
 
 <section class="solutions" id="solutions">
   <p class="section-eyebrow">Our Solutions</p>
-  <h2 class="section-title">LifeSync for Every <em>Community</em></h2>
+  <h2 class="section-title">LifeSync for<br><em>Every Community</em></h2>
   <p class="section-desc">Whether you are an individual, a local government unit, or a growing business &mdash; there is a branch for you.</p>
   <div class="branch-grid">
     <div class="branch-card">
       <div class="branch-top">
-        <div class="branch-icon"><i class="fa-solid fa-user-astronaut" style="color:var(--cyan)"></i></div>
+        <div class="branch-icon"><i class="fa-solid fa-user-astronaut" style="color:var(--dim)"></i></div>
         <span class="branch-badge">For Individuals</span>
       </div>
       <h3>LifeSync for Individuals</h3>
@@ -638,8 +623,8 @@
     </div>
     <div class="branch-card">
       <div class="branch-top">
-        <div class="branch-icon"><i class="fa-solid fa-landmark" style="color:#5FF0FF"></i></div>
-        <span class="branch-badge" style="background:rgba(95,240,255,.1);border-color:rgba(95,240,255,.2);color:#5FF0FF;">For Communities</span>
+        <div class="branch-icon"><i class="fa-solid fa-landmark" style="color:var(--dim)"></i></div>
+        <span class="branch-badge">For Communities</span>
       </div>
       <h3>LifeSync for Communities</h3>
       <p>Modernize governance. Residents file complaints digitally, officials report to DTI seamlessly.</p>
@@ -649,12 +634,12 @@
         <li><i class="fa-solid fa-check"></i> DTI reporting integration</li>
         <li><i class="fa-solid fa-check"></i> Community announcement board</li>
       </ul>
-      <a href="lifesync-communities.html" class="btn-learn" style="border-color:rgba(95,240,255,.3);color:#5FF0FF;">Learn more &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
+      <a href="lifesync-communities.html" class="btn-learn">Learn more &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
     </div>
     <div class="branch-card">
       <div class="branch-top">
-        <div class="branch-icon"><i class="fa-solid fa-briefcase" style="color:#FFD700"></i></div>
-        <span class="branch-badge" style="background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.2);color:#FFD700;">For Business</span>
+        <div class="branch-icon"><i class="fa-solid fa-briefcase" style="color:var(--dim)"></i></div>
+        <span class="branch-badge">For Business</span>
       </div>
       <h3>LifeSync for Business</h3>
       <p>Team wellness, expense tracking, and productivity analytics for teams up to 10.</p>
@@ -664,14 +649,14 @@
         <li><i class="fa-solid fa-check"></i> Productivity analytics</li>
         <li><i class="fa-solid fa-check"></i> Department-level reporting</li>
       </ul>
-      <a href="lifesync-business.html" class="btn-learn" style="border-color:rgba(255,215,0,.3);color:#FFD700;">Learn more &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
+      <a href="lifesync-business.html" class="btn-learn">Learn more &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
 
-<section class="pricing" id="pricing">
+<section id="pricing">
   <p class="section-eyebrow">Pricing</p>
-  <h2 class="section-title">Simple, <em>Transparent</em> Pricing</h2>
+  <h2 class="section-title">Simple,<br><em>Transparent</em> Pricing</h2>
   <p class="section-desc">No hidden fees. 14-day free trial on all plans &mdash; no card needed.</p>
   <div class="pricing-toggle">
     <span class="toggle-label active" id="lbl-monthly">Monthly</span>
@@ -694,10 +679,10 @@
         <li><i class="fa-solid fa-check"></i> Smart alarms &amp; tasks</li>
         <li><i class="fa-solid fa-check"></i> 1 user account</li>
       </ul>
-      <button class="btn-price btn-price-outline" onclick="goSignup('individual')">Start Free Trial</button>
+      <button class="btn-price btn-price-glass" onclick="goSignup('individual')">Start Free Trial</button>
     </div>
     <div class="price-card featured">
-      <div class="featured-ribbon">Popular</div>
+      <div class="feat-ribbon">Popular</div>
       <p class="price-plan">Communities</p>
       <div class="price-amount"><span class="currency">$</span><span class="amount" id="price-com">15</span><span class="period">/mo</span></div>
       <p class="price-annual-note" id="note-com">Billed monthly</p>
@@ -711,7 +696,7 @@
         <li><i class="fa-solid fa-check"></i> Announcement board</li>
         <li><i class="fa-solid fa-check"></i> Up to 5 admins (after trial)</li>
       </ul>
-      <button class="btn-price btn-price-cyan" onclick="goSignup('communities')">Start Free Trial</button>
+      <button class="btn-price btn-price-white" onclick="goSignup('communities')">Start Free Trial</button>
     </div>
     <div class="price-card">
       <p class="price-plan">Business</p>
@@ -727,15 +712,15 @@
         <li><i class="fa-solid fa-check"></i> Dept. reporting</li>
         <li><i class="fa-solid fa-check"></i> Up to 10 users (after trial)</li>
       </ul>
-      <button class="btn-price btn-price-outline" onclick="goSignup('business')">Start Free Trial</button>
+      <button class="btn-price btn-price-glass" onclick="goSignup('business')">Start Free Trial</button>
     </div>
   </div>
 </section>
 
 <section class="cta-strip">
-  <h2>Ready to <em style="font-style:italic;font-family:'Instrument Serif',serif;background:linear-gradient(90deg,var(--cyan),#5FF0FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Sync Your Life?</em></h2>
+  <h2>Ready to<br><em>Sync Your Life?</em></h2>
   <p>Join thousands already living smarter with LifeSync. 14 days free, no card required.</p>
-  <button class="btn-glow" onclick="goStart()"><i class="fa-solid fa-gift" style="margin-right:.45rem"></i>Start 14-Day Free Trial</button>
+  <button class="btn-primary" onclick="goStart()"><i class="fa-solid fa-gift" style="margin-right:.45rem"></i>Start 14-Day Free Trial</button>
 </section>
 
 <footer id="contact">
@@ -773,92 +758,48 @@
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <button class="modal-close" onclick="document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow=''"><i class="fa-solid fa-xmark"></i></button>
+    <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
     <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
   // GUARD
-  function getCtaHref(plan) {
-    var fp = (function(){var s=[navigator.userAgent,navigator.language,screen.width+'x'+screen.height,screen.colorDepth,new Date().getTimezoneOffset()].join('|');var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h|0;}return Math.abs(h).toString(36);})();
-    var used = JSON.parse(localStorage.getItem('ls_trial_devices')||'[]');
-    var trialUsed = used.indexOf(fp) > -1;
-    var li = !!localStorage.getItem('ls_user');
-    var paid = localStorage.getItem('ls_paid') === 'true';
-    if (li && paid) return 'dashboard.html';
-    if (li) return 'checkout.html?plan=' + plan;
-    if (trialUsed) return 'signup.html?plan=' + plan + '&trial_used=1';
-    return 'signup.html?plan=' + plan;
-  }
-  function goStart() { window.location.href = getCtaHref('individual'); }
-  function goSignup(plan) { window.location.href = getCtaHref(plan); }
-
-  var lsUser = JSON.parse(localStorage.getItem('ls_user') || 'null');
-  if (lsUser) {
-    document.getElementById('nav-right').innerHTML = '<a href="dashboard.html" class="nav-login">Dashboard</a><button class="btn-nav" onclick="window.location.href=\'dashboard.html\'">My Account</button>';
-  }
+  function getCtaHref(plan){var fp=(function(){var s=[navigator.userAgent,navigator.language,screen.width+"x"+screen.height,screen.colorDepth,new Date().getTimezoneOffset()].join("|");var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h|0;}return Math.abs(h).toString(36);})();var used=JSON.parse(localStorage.getItem("ls_trial_devices")||"[]");var tu=used.indexOf(fp)>-1;var li=!!localStorage.getItem("ls_user");var paid=localStorage.getItem("ls_paid")==="true";if(li&&paid)return"dashboard.html";if(li)return"checkout.html?plan="+plan;if(tu)return"signup.html?plan="+plan+"&trial_used=1";return"signup.html?plan="+plan;}
+  function goStart(){window.location.href=getCtaHref("individual");}
+  function goSignup(plan){window.location.href=getCtaHref(plan);}
+  var lsUser=JSON.parse(localStorage.getItem("ls_user")||"null");
+  if(lsUser){document.getElementById("nav-right").innerHTML="<a href='dashboard.html' class='nav-login'>Dashboard</a><button class='btn-nav' onclick=\"window.location.href='dashboard.html'\">My Account</button>";}
 
   // BILLING TOGGLE
-  var yearly = false;
-  var prices = { ind:[7,6.25], com:[15,12.50], biz:[49,40.83] };
-  var notes = {
-    ind:['Billed monthly','$75 billed yearly'],
-    com:['Billed monthly','$150 billed yearly'],
-    biz:['Billed monthly - up to 10 users','$490 billed yearly - up to 10 users']
-  };
-  document.getElementById('billing-toggle').addEventListener('click', function(){
-    yearly = !yearly;
-    this.classList.toggle('yearly', yearly);
-    document.getElementById('lbl-monthly').classList.toggle('active', !yearly);
-    document.getElementById('lbl-yearly').classList.toggle('active', yearly);
-    var k = yearly ? 1 : 0;
-    document.getElementById('price-ind').textContent = prices.ind[k];
-    document.getElementById('price-com').textContent = prices.com[k];
-    document.getElementById('price-biz').textContent = prices.biz[k];
-    document.getElementById('note-ind').textContent = notes.ind[k];
-    document.getElementById('note-com').textContent = notes.com[k];
-    document.getElementById('note-biz').textContent = notes.biz[k];
-  });
+  var yearly=false;
+  var prices={ind:[7,6.25],com:[15,12.50],biz:[49,40.83]};
+  var notes={ind:["Billed monthly","$75 billed yearly"],com:["Billed monthly","$150 billed yearly"],biz:["Billed monthly - up to 10 users","$490 billed yearly - up to 10 users"]};
+  document.getElementById("billing-toggle").addEventListener("click",function(){yearly=!yearly;this.classList.toggle("yearly",yearly);document.getElementById("lbl-monthly").classList.toggle("active",!yearly);document.getElementById("lbl-yearly").classList.toggle("active",yearly);var k=yearly?1:0;document.getElementById("price-ind").textContent=prices.ind[k];document.getElementById("price-com").textContent=prices.com[k];document.getElementById("price-biz").textContent=prices.biz[k];document.getElementById("note-ind").textContent=notes.ind[k];document.getElementById("note-com").textContent=notes.com[k];document.getElementById("note-biz").textContent=notes.biz[k];});
 
   // MODAL
-  var overlay = document.getElementById('modal-overlay');
-  overlay.addEventListener('click', function(e){ if(e.target===overlay){overlay.classList.remove('open');document.body.style.overflow='';} });
-  function openModal(html){ document.getElementById('modal-body').innerHTML=html; overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  var overlay=document.getElementById("modal-overlay");
+  overlay.addEventListener("click",function(e){if(e.target===overlay)closeModal();});
+  function openModal(html){document.getElementById("modal-body").innerHTML=html;overlay.classList.add("open");document.body.style.overflow="hidden";}
+  function closeModal(){overlay.classList.remove("open");document.body.style.overflow="";}
 
-  // QUOTE DATA
-  var qdata = {
-    bible:[{t:'"For I know the plans I have for you, plans to prosper you and not to harm you."',s:'Jeremiah 29:11'},{t:'"I can do all things through Christ who strengthens me."',s:'Philippians 4:13'},{t:'"Be strong and courageous. Do not be afraid."',s:'Joshua 1:9'}],
-    quran:[{t:'"Indeed, with hardship comes ease."',s:'Quran 94:6'},{t:'"Allah does not burden a soul beyond that it can bear."',s:'Quran 2:286'},{t:'"And He found you lost and guided you."',s:'Quran 93:7'}],
-    stoic:[{t:'"You have power over your mind, not outside events."',s:'Marcus Aurelius'},{t:'"Make the best use of what is in your power."',s:'Epictetus'},{t:'"Waste no more time arguing. Be one."',s:'Marcus Aurelius'}],
-    life:[{t:'"The secret of getting ahead is getting started."',s:'Mark Twain'},{t:'"In the middle of every difficulty lies opportunity."',s:'Albert Einstein'},{t:'"It does not matter how slowly you go as long as you do not stop."',s:'Confucius'}],
-    success:[{t:'"Success is not final, failure is not fatal."',s:'Winston Churchill'},{t:'"The only way to do great work is to love what you do."',s:'Steve Jobs'},{t:'"Don\'t watch the clock; do what it does. Keep going."',s:'Sam Levenson'}],
-    filipino:[{t:'"Ang hindi marunong lumingon sa pinanggalingan ay hindi makararating sa paroroonan."',s:'Jose Rizal'},{t:'"Kung may tiyaga, may nilaga."',s:'Filipino Proverb'},{t:'"Sa tuwid na landas, may tagumpay na naghihintay."',s:'Filipino Proverb'}]
-  };
-  var activeCats = JSON.parse(localStorage.getItem('ls_quote_cats') || '["bible"]');
-  function getPreview(){ var pool=[]; for(var i=0;i<activeCats.length;i++){if(qdata[activeCats[i]])pool=pool.concat(qdata[activeCats[i]]);} if(!pool.length)return{t:'Select a category.',s:''}; return pool[Math.floor(Math.random()*pool.length)]; }
-  function refreshPreview(){ var q=getPreview(); var pt=document.getElementById('qpt'); var ps=document.getElementById('qps'); if(pt)pt.textContent=q.t; if(ps)ps.textContent=q.s?'- '+q.s:''; var pills=document.querySelectorAll('.qcat'); for(var i=0;i<pills.length;i++)pills[i].classList.toggle('picked',activeCats.indexOf(pills[i].getAttribute('data-cat'))>-1); }
-  function toggleCat(cat){ var idx=activeCats.indexOf(cat); if(idx>-1){if(activeCats.length>1)activeCats.splice(idx,1);}else activeCats.push(cat); localStorage.setItem('ls_quote_cats',JSON.stringify(activeCats)); refreshPreview(); }
+  // QUOTES
+  var qdata={bible:[{t:'"For I know the plans I have for you, plans to prosper you and not to harm you."',s:"Jeremiah 29:11"},{t:'"I can do all things through Christ who strengthens me."',s:"Philippians 4:13"},{t:'"Be strong and courageous. Do not be afraid."',s:"Joshua 1:9"}],quran:[{t:'"Indeed, with hardship comes ease."',s:"Quran 94:6"},{t:'"Allah does not burden a soul beyond that it can bear."',s:"Quran 2:286"},{t:'"And He found you lost and guided you."',s:"Quran 93:7"}],stoic:[{t:'"You have power over your mind, not outside events."',s:"Marcus Aurelius"},{t:'"Make the best use of what is in your power."',s:"Epictetus"},{t:'"Waste no more time arguing. Be one."',s:"Marcus Aurelius"}],life:[{t:'"The secret of getting ahead is getting started."',s:"Mark Twain"},{t:'"In the middle of every difficulty lies opportunity."',s:"Albert Einstein"},{t:'"It does not matter how slowly you go as long as you do not stop."',s:"Confucius"}],success:[{t:'"Success is not final, failure is not fatal."',s:"Winston Churchill"},{t:'"The only way to do great work is to love what you do."',s:"Steve Jobs"}],filipino:[{t:'"Ang hindi marunong lumingon sa pinanggalingan ay hindi makararating sa paroroonan."',s:"Jose Rizal"},{t:'"Kung may tiyaga, may nilaga."',s:"Filipino Proverb"}]};
+  var activeCats=JSON.parse(localStorage.getItem("ls_quote_cats")||'["bible"]');
+  function getPreview(){var pool=[];for(var i=0;i<activeCats.length;i++){if(qdata[activeCats[i]])pool=pool.concat(qdata[activeCats[i]]);}if(!pool.length)return{t:"Select a category.",s:""};return pool[Math.floor(Math.random()*pool.length)];}
+  function refreshPreview(){var q=getPreview();var pt=document.getElementById("qpt");var ps=document.getElementById("qps");if(pt)pt.textContent=q.t;if(ps)ps.textContent=q.s?"- "+q.s:"";var pills=document.querySelectorAll(".qcat");for(var i=0;i<pills.length;i++)pills[i].classList.toggle("picked",activeCats.indexOf(pills[i].getAttribute("data-cat"))>-1);}
+  function toggleCat(cat){var idx=activeCats.indexOf(cat);if(idx>-1){if(activeCats.length>1)activeCats.splice(idx,1);}else activeCats.push(cat);localStorage.setItem("ls_quote_cats",JSON.stringify(activeCats));refreshPreview();}
 
-  function showFeature(type) {
-    var q = getPreview(); var h = '';
-    if (type==='receipt') {
-      h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-camera-retro" style="color:var(--cyan)"></i></div><div><h2>Auto Purchase Logging</h2><p>Zero manual entry, ever</p></div></div><div class="modal-body"><div class="msec"><h4>How It Works</h4><p>LifeSync captures purchases automatically through three channels so no matter how you pay, it gets logged.</p></div><div class="msec"><h4>Three Ways to Log</h4><ul class="mlist"><li><i class="fa-solid fa-camera"></i><span><strong>Receipt Photo</strong> - Snap any paper receipt. LifeSync reads merchant, amount, date, and category instantly.</span></li><li><i class="fa-solid fa-envelope"></i><span><strong>Email Forwarding</strong> - Forward any order confirmation to your LifeSync address and it is logged in seconds.</span></li><li><i class="fa-solid fa-comment-sms"></i><span><strong>SMS Parsing</strong> - Bank transaction alerts are automatically read and categorized.</span></li></ul></div><div class="msec"><h4>What You Get</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Auto category tagging (Food, Transport, Bills)</span></li><li><i class="fa-solid fa-check"></i><span>Weekly and monthly spending summaries</span></li><li><i class="fa-solid fa-check"></i><span>Budget alerts when close to your limit</span></li><li><i class="fa-solid fa-check"></i><span>Export expense history to CSV anytime</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';
-    } else if (type==='health') {
-      h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-heart-pulse" style="color:#5FF0FF"></i></div><div><h2>Step and Health Tracking</h2><p>Your daily wellness, simplified</p></div></div><div class="modal-body"><div class="msec"><h4>What It Tracks</h4><ul class="mlist"><li><i class="fa-solid fa-person-walking"></i><span><strong>Daily Steps</strong> - Syncs with your phone pedometer. Set a daily goal (default 10,000 steps).</span></li><li><i class="fa-solid fa-droplet"></i><span><strong>Hydration</strong> - Log water intake and get reminders throughout the day.</span></li><li><i class="fa-solid fa-moon"></i><span><strong>Sleep</strong> - Log bedtime and wake time to monitor patterns.</span></li><li><i class="fa-solid fa-fire"></i><span><strong>Calories Burned</strong> - Estimated based on steps and body weight.</span></li></ul></div><div class="msec"><h4>Reminders and Nudges</h4><p>LifeSync nudges you if you have been sitting too long, have not had water, or are falling short of your step goal.</p></div><div class="msec"><h4>Weekly Health Report</h4><p>Every Monday: steps average, best day, hydration score, and a tip for improvement.</p></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';
-    } else if (type==='quotes') {
-      var cats=[['bible','Bible'],['quran','Quran'],['stoic','Stoic'],['life','Life'],['success','Success'],['filipino','Filipino']];
-      var pillsHtml=''; for(var i=0;i<cats.length;i++){var picked=activeCats.indexOf(cats[i][0])>-1?' picked':''; pillsHtml+='<div class="qcat'+picked+'" data-cat="'+cats[i][0]+'" onclick="toggleCat(this.getAttribute(\'data-cat\'))">'+cats[i][1]+'</div>';}
-      h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-book-open" style="color:#FFD700"></i></div><div><h2>Daily Motivational Quotes</h2><p>Choose your source of wisdom</p></div></div><div class="modal-body"><div class="msec"><h4>Pick Your Categories</h4><p>Tap one or more. Your daily quote is drawn from your chosen categories.</p><div class="qcat-wrap">'+pillsHtml+'</div></div><div class="msec"><h4>Preview</h4><div class="qpreview"><div class="qt" id="qpt">'+q.t+'</div><div class="qs" id="qps">'+(q.s?'- '+q.s:'')+'</div></div><button class="btn-try" onclick="refreshPreview()"><i class="fa-solid fa-rotate" style="margin-right:.3rem"></i>Try another</button></div><div class="msec"><h4>When You Receive It</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Every morning as your first notification</span></li><li><i class="fa-solid fa-check"></i><span>Shown on your dashboard when you log in</span></li><li><i class="fa-solid fa-check"></i><span>Shareable to WhatsApp, Facebook, or copied as text</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';
-    } else if (type==='alarms') {
-      h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-bell-concierge" style="color:#FF6B9D"></i></div><div><h2>Smart Alarms That Ring</h2><p>The alarm you cannot ignore</p></div></div><div class="modal-body"><div class="msec"><h4>Why Regular Alarms Fail</h4><p>Normal alarms ring once, you hit snooze, and go back to sleep. LifeSync alarms escalate until you prove you are awake.</p></div><div class="msec"><h4>How Smart Alarms Work</h4><ul class="mlist"><li><i class="fa-solid fa-bell"></i><span><strong>First Ring</strong> - Alarm sounds at your set time.</span></li><li><i class="fa-solid fa-volume-high"></i><span><strong>Escalation</strong> - Not dismissed in 2 minutes? Volume increases and frequency doubles.</span></li><li><i class="fa-solid fa-mobile-screen"></i><span><strong>Confirmation Required</strong> - Solve a simple math problem or shake your phone.</span></li><li><i class="fa-solid fa-person-walking"></i><span><strong>Step Check (optional)</strong> - Alarm stays on until you take 20 steps.</span></li></ul></div><div class="msec"><h4>More Features</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Different alarms for weekdays vs weekends</span></li><li><i class="fa-solid fa-check"></i><span>Task-linked alarms that stop only when task is complete</span></li><li><i class="fa-solid fa-check"></i><span>Gradual wake - volume slowly increases over 5 minutes</span></li><li><i class="fa-solid fa-check"></i><span>Custom labels: Take medicine, Morning walk, Meeting at 9</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';
-    }
+  function showFeature(type){
+    var q=getPreview();var h="";
+    if(type==="receipt"){h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-camera-retro" style="color:var(--dim)"></i></div><div><h2>Auto Purchase Logging</h2><p>Zero manual entry, ever</p></div></div><div class="modal-body"><div class="msec"><h4>How It Works</h4><p>LifeSync captures purchases automatically through three channels so no matter how you pay, it gets logged.</p></div><div class="msec"><h4>Three Ways to Log</h4><ul class="mlist"><li><i class="fa-solid fa-camera"></i><span><strong style="color:var(--white)">Receipt Photo</strong> &mdash; Snap any paper receipt. LifeSync reads merchant, amount, date, and category instantly.</span></li><li><i class="fa-solid fa-envelope"></i><span><strong style="color:var(--white)">Email Forwarding</strong> &mdash; Forward any order confirmation to your LifeSync address and it is logged in seconds.</span></li><li><i class="fa-solid fa-comment-sms"></i><span><strong style="color:var(--white)">SMS Parsing</strong> &mdash; Bank transaction alerts are automatically read and categorized.</span></li></ul></div><div class="msec"><h4>What You Get</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Auto category tagging (Food, Transport, Bills)</span></li><li><i class="fa-solid fa-check"></i><span>Weekly and monthly spending summaries</span></li><li><i class="fa-solid fa-check"></i><span>Budget alerts when close to your limit</span></li><li><i class="fa-solid fa-check"></i><span>Export expense history to CSV anytime</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';}
+    else if(type==="health"){h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-heart-pulse" style="color:var(--dim)"></i></div><div><h2>Step and Health Tracking</h2><p>Your daily wellness, simplified</p></div></div><div class="modal-body"><div class="msec"><h4>What It Tracks</h4><ul class="mlist"><li><i class="fa-solid fa-person-walking"></i><span><strong style="color:var(--white)">Daily Steps</strong> &mdash; Syncs with your phone pedometer. Set a daily goal (default 10,000).</span></li><li><i class="fa-solid fa-droplet"></i><span><strong style="color:var(--white)">Hydration</strong> &mdash; Log water intake and get reminders throughout the day.</span></li><li><i class="fa-solid fa-moon"></i><span><strong style="color:var(--white)">Sleep</strong> &mdash; Log bedtime and wake time to monitor patterns.</span></li><li><i class="fa-solid fa-fire"></i><span><strong style="color:var(--white)">Calories Burned</strong> &mdash; Estimated based on step count and body weight.</span></li></ul></div><div class="msec"><h4>Reminders</h4><p>LifeSync nudges you if you have been sitting too long, have not had water, or are falling short of your step goal.</p></div><div class="msec"><h4>Weekly Health Report</h4><p>Every Monday: steps average, best day, hydration score, and a tip for improvement.</p></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';}
+    else if(type==="quotes"){var cats=[["bible","Bible"],["quran","Quran"],["stoic","Stoic"],["life","Life"],["success","Success"],["filipino","Filipino"]];var ph="";for(var i=0;i<cats.length;i++){var picked=activeCats.indexOf(cats[i][0])>-1?" picked":"";ph+='<div class="qcat'+picked+'" data-cat="'+cats[i][0]+'" onclick="toggleCat(this.getAttribute(\'data-cat\'))">'+cats[i][1]+"</div>";}h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-book-open" style="color:var(--dim)"></i></div><div><h2>Daily Motivational Quotes</h2><p>Choose your source of wisdom</p></div></div><div class="modal-body"><div class="msec"><h4>Pick Your Categories</h4><p>Tap one or more. Your daily quote is drawn from your chosen categories.</p><div class="qcat-wrap">'+ph+'</div></div><div class="msec"><h4>Preview</h4><div class="qpreview"><div class="qt" id="qpt">'+q.t+'</div><div class="qs" id="qps">'+(q.s?"- "+q.s:"")+'</div></div><button class="btn-try" onclick="refreshPreview()"><i class="fa-solid fa-rotate" style="margin-right:.3rem"></i>Try another</button></div><div class="msec"><h4>When You Receive It</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Every morning as your first notification</span></li><li><i class="fa-solid fa-check"></i><span>Shown on your dashboard when you log in</span></li><li><i class="fa-solid fa-check"></i><span>Shareable to WhatsApp, Facebook, or copied as text</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';}
+    else if(type==="alarms"){h='<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-bell-concierge" style="color:var(--dim)"></i></div><div><h2>Smart Alarms That Ring</h2><p>The alarm you cannot ignore</p></div></div><div class="modal-body"><div class="msec"><h4>Why Regular Alarms Fail</h4><p>Normal alarms ring once, you hit snooze, and go back to sleep. LifeSync alarms escalate until you prove you are awake.</p></div><div class="msec"><h4>How Smart Alarms Work</h4><ul class="mlist"><li><i class="fa-solid fa-bell"></i><span><strong style="color:var(--white)">First Ring</strong> &mdash; Alarm sounds at your set time.</span></li><li><i class="fa-solid fa-volume-high"></i><span><strong style="color:var(--white)">Escalation</strong> &mdash; Not dismissed in 2 minutes? Volume increases and frequency doubles.</span></li><li><i class="fa-solid fa-mobile-screen"></i><span><strong style="color:var(--white)">Confirmation Required</strong> &mdash; Solve a simple math problem or shake your phone.</span></li><li><i class="fa-solid fa-person-walking"></i><span><strong style="color:var(--white)">Step Check (optional)</strong> &mdash; Alarm stays on until you take 20 steps.</span></li></ul></div><div class="msec"><h4>More Features</h4><ul class="mlist"><li><i class="fa-solid fa-check"></i><span>Different alarms for weekdays vs weekends</span></li><li><i class="fa-solid fa-check"></i><span>Task-linked alarms that stop only when task is complete</span></li><li><i class="fa-solid fa-check"></i><span>Gradual wake &mdash; volume slowly increases over 5 minutes</span></li><li><i class="fa-solid fa-check"></i><span>Custom labels: Take medicine, Morning walk, Meeting at 9</span></li></ul></div><button class="modal-cta" onclick="goSignup(\'individual\')">Start 14-Day Free Trial</button></div>';}
     openModal(h);
   }
 
-  function showHow() {
-    openModal('<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-play" style="color:var(--cyan)"></i></div><div><h2>How LifeSync Works</h2><p>Up and running in 3 minutes</p></div></div><div class="modal-body"><div class="how-step"><div class="how-num">1</div><div class="how-text"><h4>Create Your Account</h4><p>Sign up with your email and pick your plan. No card needed for the 14-day trial.</p></div></div><div class="how-step"><div class="how-num">2</div><div class="how-text"><h4>Connect Your Channels</h4><p>Link email or SMS for purchase logging. Enable your phone pedometer for step tracking.</p></div></div><div class="how-step"><div class="how-num">3</div><div class="how-text"><h4>Customize Your Experience</h4><p>Pick your quote source, set your step goal, and configure your smart alarms.</p></div></div><div class="how-step"><div class="how-num">4</div><div class="how-text"><h4>Let LifeSync Run</h4><p>LifeSync works quietly in the background - logging, tracking, motivating, and alerting when it matters.</p></div></div><div class="how-step"><div class="how-num">5</div><div class="how-text"><h4>Review Your Dashboard</h4><p>Check in each morning for spending summary, step progress, daily quote, and your task list.</p></div></div><button class="modal-cta" onclick="goStart()">Start Free Trial Now</button></div>');
-  }
+  function showHow(){openModal('<div class="modal-header"><div class="modal-icon"><i class="fa-solid fa-play" style="color:var(--dim)"></i></div><div><h2>How LifeSync Works</h2><p>Up and running in 3 minutes</p></div></div><div class="modal-body"><div class="how-step"><div class="how-num">1</div><div class="how-text"><h4>Create Your Account</h4><p>Sign up with your email and pick your plan. No card needed for the 14-day trial.</p></div></div><div class="how-step"><div class="how-num">2</div><div class="how-text"><h4>Connect Your Channels</h4><p>Link email or SMS for purchase logging. Enable your phone pedometer for step tracking.</p></div></div><div class="how-step"><div class="how-num">3</div><div class="how-text"><h4>Customize Your Experience</h4><p>Pick your quote source, set your step goal, and configure your smart alarms.</p></div></div><div class="how-step"><div class="how-num">4</div><div class="how-text"><h4>Let LifeSync Run</h4><p>LifeSync works quietly in the background logging, tracking, motivating, and alerting when it matters.</p></div></div><div class="how-step"><div class="how-num">5</div><div class="how-text"><h4>Review Your Dashboard</h4><p>Check in each morning for spending summary, step progress, daily quote, and your task list.</p></div></div><button class="modal-cta" onclick="goStart()">Start Free Trial Now</button></div>');}
 </script>
 </body>
 </html>

@@ -1,142 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <!-- LifeSync Glass v1 -->
-  <title>Sign Up — LifeSync</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <!-- LifeSync Glass v2 -->
+  <title>Sign Up &mdash; LifeSync</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#020B18;--cyan:#00D4FF;--teal:#0D9488;--white:#FFFFFF;--off-white:#E2EEF7;--muted:#6B8CA8;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.09);--glass-hover:rgba(255,255,255,.08);--red:#FF4D6A;}
-    html{scroll-behavior:smooth;}
-    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--off-white);min-height:100vh;display:flex;flex-direction:column;}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(0,212,255,.1) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 80%,rgba(13,148,136,.08) 0%,transparent 60%);}
-    *{position:relative;z-index:1;}
-
-    nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5%;background:rgba(2,11,24,.7);backdrop-filter:blur(24px);border-bottom:1px solid var(--glass-border);}
-    .logo{font-weight:900;font-size:1.4rem;color:var(--white);text-decoration:none;letter-spacing:-1px;}
-    .logo span{color:var(--cyan);}
-    .nav-link{font-size:.88rem;font-weight:600;color:var(--muted);text-decoration:none;transition:color .2s;}
-    .nav-link:hover{color:var(--cyan);}
-
-    .page{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 5%;}
-    .card{background:rgba(5,15,32,.8);backdrop-filter:blur(32px);border:1px solid var(--glass-border);border-radius:28px;padding:2.8rem 2.4rem;width:100%;max-width:500px;box-shadow:0 0 80px rgba(0,212,255,.06);}
-    .card-title{font-size:1.9rem;font-weight:900;color:var(--white);letter-spacing:-1px;margin-bottom:.4rem;}
-    .card-sub{font-size:.88rem;color:var(--muted);margin-bottom:2rem;}
-    .card-sub a{color:var(--cyan);text-decoration:none;font-weight:700;}
-
-    .trial-banner{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:14px;padding:.85rem 1rem;margin-bottom:1.6rem;font-size:.82rem;color:var(--cyan);line-height:1.55;}
-    .trial-banner strong{font-weight:800;}
-
-    .plan-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.8rem;}
-    .plan-tab{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:.75rem .5rem;text-align:center;cursor:pointer;transition:all .2s;}
-    .plan-tab.active{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.35);box-shadow:0 0 16px rgba(0,212,255,.1);}
-    .plan-tab .plan-name{font-size:.78rem;font-weight:700;color:var(--white);}
-    .plan-tab .plan-price{font-size:.7rem;color:var(--muted);margin-top:.15rem;}
-    .plan-tab.active .plan-price{color:var(--cyan);}
-
-    .form-group{margin-bottom:1.2rem;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-    label{display:block;font-size:.78rem;font-weight:700;color:var(--off-white);margin-bottom:.4rem;letter-spacing:.3px;}
-    input{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--glass-border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;}
-    input::placeholder{color:var(--muted);}
-    input:focus{border-color:rgba(0,212,255,.45);box-shadow:0 0 0 3px rgba(0,212,255,.1);}
-    input.error{border-color:var(--red);}
-    .error-msg{font-size:.73rem;color:var(--red);margin-top:.3rem;display:none;}
-    .error-msg.show{display:block;}
-    .password-wrap{position:relative;}
-    .password-wrap input{padding-right:2.8rem;}
-    .toggle-pw{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;}
-    .strength-bar{height:3px;border-radius:2px;background:var(--glass-border);margin-top:.5rem;overflow:hidden;}
-    .strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s;}
-    .terms{font-size:.76rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;}
-    .terms a{color:var(--cyan);text-decoration:none;font-weight:600;}
-    .btn-submit{width:100%;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg);border:none;padding:.9rem;border-radius:999px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:opacity .2s,transform .15s;box-shadow:0 0 28px rgba(0,212,255,.3);}
-    .btn-submit:hover{opacity:.9;transform:translateY(-1px);}
-    .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-    .divider{display:flex;align-items:center;gap:1rem;margin:1.4rem 0;}
-    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--glass-border);}
-    .divider span{font-size:.75rem;color:var(--muted);}
-    .btn-google{width:100%;background:var(--glass);border:1px solid var(--glass-border);color:var(--off-white);padding:.85rem;border-radius:999px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:background .2s,border-color .2s;}
-    .btn-google:hover{background:var(--glass-hover);border-color:rgba(255,255,255,.18);}
-
-    .success-screen{display:none;text-align:center;padding:1rem 0;}
-    .success-screen.show{display:block;}
-    .success-icon{width:72px;height:72px;border-radius:50%;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.8rem;color:var(--cyan);}
-    .success-screen h2{font-size:1.6rem;font-weight:900;color:var(--white);margin-bottom:.5rem;letter-spacing:-1px;}
-    .success-screen p{font-size:.88rem;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto 1.8rem;}
-    .btn-dash{display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg);padding:.85rem 2rem;border-radius:999px;font-weight:800;font-size:.95rem;text-decoration:none;box-shadow:0 0 24px rgba(0,212,255,.3);}
-
-    .warn-box{background:rgba(255,77,106,.08);border:1px solid rgba(255,77,106,.25);border-radius:12px;padding:.85rem 1rem;font-size:.82rem;color:#FF4D6A;margin-bottom:1.2rem;display:none;}
-    .warn-box.show{display:block;}
-
-    @media(max-width:480px){.form-row{grid-template-columns:1fr;}.card{padding:2rem 1.5rem;}}
-  </style>
+  <style>.orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}.orb{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.18),rgba(30,30,40,.9) 60%,rgba(10,10,15,.95));box-shadow:inset 4px 4px 12px rgba(255,255,255,.12),inset -4px -4px 12px rgba(0,0,0,.6),0 8px 40px rgba(0,0,0,.7);animation:float linear infinite;}.orb:nth-child(1){width:220px;height:220px;top:-50px;left:-60px;animation-duration:22s;opacity:.65;}.orb:nth-child(2){width:140px;height:140px;top:20%;right:-30px;animation-duration:18s;animation-delay:-6s;opacity:.5;}.orb:nth-child(3){width:280px;height:280px;bottom:-80px;right:-60px;animation-duration:28s;animation-delay:-4s;opacity:.55;}.orb:nth-child(4){width:80px;height:80px;top:55%;left:5%;animation-duration:20s;animation-delay:-12s;opacity:.35;}@keyframes float{0%{transform:translateY(0) translateX(0) rotate(0deg);}25%{transform:translateY(-18px) translateX(8px) rotate(90deg);}50%{transform:translateY(-8px) translateX(-12px) rotate(180deg);}75%{transform:translateY(-22px) translateX(6px) rotate(270deg);}100%{transform:translateY(0) translateX(0) rotate(360deg);}}.noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}*{position:relative;z-index:1;}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#080808;--glass:rgba(255,255,255,.045);--glass-b:rgba(255,255,255,.08);--glass-h:rgba(255,255,255,.07);--border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.14);--white:#FFFFFF;--dim:rgba(255,255,255,.55);--muted:rgba(255,255,255,.3);--cyan:#00D4FF;--red:#FF4D6A;}
+html{scroll-behavior:smooth;}body{font-family:"Outfit",sans-serif;background:var(--bg);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5%;background:rgba(8,8,8,.6);backdrop-filter:blur(30px);border-bottom:1px solid var(--border);}
+.logo{font-weight:900;font-size:1.4rem;color:var(--white);text-decoration:none;letter-spacing:-1px;}.logo span{color:var(--cyan);}
+.nav-link{font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}.nav-link:hover{color:var(--white);}
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 5%;}
+.card{background:rgba(12,12,12,.9);backdrop-filter:blur(40px) saturate(180%);border:1px solid var(--border);border-radius:28px;padding:2.8rem 2.4rem;width:100%;max-width:480px;box-shadow:0 0 80px rgba(0,0,0,.5);}
+.card-title{font-size:1.9rem;font-weight:900;color:var(--white);letter-spacing:-1.5px;margin-bottom:.4rem;}
+.card-sub{font-size:.86rem;color:var(--muted);margin-bottom:2rem;}.card-sub a{color:var(--dim);text-decoration:none;font-weight:700;}
+.form-group{margin-bottom:1.2rem;}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+label{display:block;font-size:.76rem;font-weight:700;color:var(--dim);margin-bottom:.4rem;letter-spacing:.3px;}
+input,select{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:12px;font-family:"Outfit",sans-serif;font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;}
+input::placeholder{color:var(--muted);}select option{background:#080808;color:var(--white);}
+input:focus,select:focus{border-color:var(--border-h);box-shadow:0 0 0 3px rgba(255,255,255,.05);}
+input.error{border-color:var(--red);}
+.error-msg{font-size:.72rem;color:var(--red);margin-top:.3rem;display:none;}.error-msg.show{display:block;}
+.password-wrap{position:relative;}.password-wrap input{padding-right:2.8rem;}
+.toggle-pw{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:.88rem;}
+.strength-bar{height:3px;border-radius:2px;background:var(--border);margin-top:.5rem;overflow:hidden;}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s;}
+.terms{font-size:.74rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;}.terms a{color:var(--dim);text-decoration:none;font-weight:600;}
+.btn-submit{width:100%;background:var(--white);color:var(--bg);border:none;padding:.9rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;transition:opacity .2s;margin-bottom:1rem;}
+.btn-submit:hover{opacity:.85;}.btn-submit:disabled{opacity:.45;cursor:not-allowed;}
+.divider{display:flex;align-items:center;gap:1rem;margin:1rem 0;}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border);}
+.divider span{font-size:.72rem;color:var(--muted);}
+.btn-google{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--dim);padding:.85rem;border-radius:999px;font-family:"Outfit",sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:background .2s;}
+.btn-google:hover{background:rgba(255,255,255,.08);}
+.plan-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.6rem;}
+.plan-tab{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:.75rem .5rem;text-align:center;cursor:pointer;transition:all .2s;}
+.plan-tab.active{background:rgba(255,255,255,.09);border-color:var(--border-h);}
+.plan-tab .plan-name{font-size:.78rem;font-weight:700;color:var(--white);}.plan-tab .plan-price{font-size:.7rem;color:var(--muted);margin-top:.12rem;}
+.plan-tab.active .plan-price{color:var(--dim);}
+.trial-banner{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:.85rem 1rem;margin-bottom:1.5rem;font-size:.8rem;color:var(--dim);line-height:1.55;}
+.trial-banner strong{font-weight:800;color:var(--white);}
+.warn-box{background:rgba(255,77,106,.07);border:1px solid rgba(255,77,106,.2);border-radius:12px;padding:.8rem 1rem;font-size:.8rem;color:var(--red);margin-bottom:1.2rem;display:none;}.warn-box.show{display:block;}
+.demo-hint{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-size:.76rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.5;}
+.demo-hint strong{font-weight:800;color:var(--dim);}
+.alert-box{background:rgba(255,77,106,.07);border:1px solid rgba(255,77,106,.2);border-radius:12px;padding:.8rem 1rem;font-size:.8rem;color:var(--red);display:none;margin-bottom:1.2rem;align-items:center;gap:.5rem;}.alert-box.show{display:flex;}
+.forgot{display:block;text-align:right;font-size:.74rem;color:var(--muted);text-decoration:none;font-weight:600;margin-top:.3rem;}.forgot:hover{color:var(--dim);}
+.success-screen{display:none;text-align:center;padding:1rem 0;}.success-screen.show{display:block;}
+.success-icon{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border-h);display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;font-size:1.7rem;color:var(--dim);}
+.success-screen h2{font-size:1.6rem;font-weight:900;color:var(--white);margin-bottom:.5rem;letter-spacing:-1px;}
+.success-screen p{font-size:.86rem;color:var(--muted);line-height:1.6;max-width:300px;margin:0 auto 1.8rem;}
+.btn-dash{display:inline-block;background:var(--white);color:var(--bg);padding:.85rem 2rem;border-radius:999px;font-weight:800;font-size:.92rem;text-decoration:none;}
+@media(max-width:480px){.form-row{grid-template-columns:1fr;}.card{padding:2rem 1.4rem;}}</style>
 </head>
 <body>
-<nav>
-  <a href="index.html" class="logo">Life<span>Sync</span></a>
-  <a href="login.html" class="nav-link">Already have an account? <strong>Log in</strong></a>
-</nav>
-<div class="page">
-  <div class="card">
-    <div id="form-section">
-      <h1 class="card-title">Start your free trial</h1>
-      <p class="card-sub">14 days free, no card required. Have an account? <a href="login.html">Log in here</a></p>
-
-      <div class="warn-box" id="warn-box"><i class="fa-solid fa-triangle-exclamation" style="margin-right:.4rem"></i><strong>Trial already used:</strong> A free trial was already activated on this device. Please log in or purchase a plan directly.</div>
-
-      <div class="trial-banner"><strong><i class="fa-solid fa-gift" style="margin-right:.4rem"></i>14-day free trial includes:</strong><br>Full access for 1 user. Add team members after subscribing. No credit card needed today.</div>
-
-      <div class="plan-tabs">
-        <div class="plan-tab active" data-plan="individual" onclick="selectPlan(this)"><div class="plan-name">Individual</div><div class="plan-price">Free 14 days</div></div>
-        <div class="plan-tab" data-plan="communities" onclick="selectPlan(this)"><div class="plan-name">Communities</div><div class="plan-price">Free 14 days</div></div>
-        <div class="plan-tab" data-plan="business" onclick="selectPlan(this)"><div class="plan-name">Business</div><div class="plan-price">Free 14 days</div></div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group"><label>First Name</label><input type="text" id="fname" placeholder="Aaron"/><div class="error-msg" id="fname-err">Required</div></div>
-        <div class="form-group"><label>Last Name</label><input type="text" id="lname" placeholder="Cruz"/><div class="error-msg" id="lname-err">Required</div></div>
-      </div>
-      <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="you@email.com"/><div class="error-msg" id="email-err">Enter a valid email</div></div>
-      <div class="form-group">
-        <label>Password</label>
-        <div class="password-wrap">
-          <input type="password" id="password" placeholder="Min. 8 characters" oninput="checkStrength(this.value)"/>
-          <button class="toggle-pw" type="button" onclick="togglePw()"><i class="fa-solid fa-eye"></i></button>
-        </div>
-        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
-        <div class="error-msg" id="pw-err">Password must be at least 8 characters</div>
-      </div>
-      <p class="terms">By signing up you agree to LifeSync\'s <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
-      <button class="btn-submit" id="submit-btn" onclick="handleSignup()"><i class="fa-solid fa-gift" style="margin-right:.4rem"></i>Start My Free Trial</button>
-      <div class="divider"><span>or sign up with</span></div>
-      <button class="btn-google" onclick="alert('Google sign-in would be connected here with Firebase Auth.')">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continue with Google
-      </button>
+<div class="orbs"><div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div></div><div class="noise"></div>
+<nav><a href="index.html" class="logo">Life<span>Sync</span></a><a href="login.html" class="nav-link">Already have an account? <strong>Log in</strong></a></nav>
+<div class="page"><div class="card">
+  <div id="form-section">
+    <h1 class="card-title">Start your free trial</h1>
+    <p class="card-sub">14 days free, no card required. Have one? <a href="login.html">Log in</a></p>
+    <div class="warn-box" id="warn-box"><i class="fa-solid fa-triangle-exclamation" style="margin-right:.4rem"></i><strong>Trial already used:</strong> Please log in or purchase a plan directly.</div>
+    <div class="trial-banner"><strong><i class="fa-solid fa-gift" style="margin-right:.3rem"></i>14-day free trial includes:</strong><br>Full access for 1 user. Add team members after subscribing. No card needed today.</div>
+    <div class="plan-tabs">
+      <div class="plan-tab active" data-plan="individual" onclick="selectPlan(this)"><div class="plan-name">Individual</div><div class="plan-price">Free 14 days</div></div>
+      <div class="plan-tab" data-plan="communities" onclick="selectPlan(this)"><div class="plan-name">Communities</div><div class="plan-price">Free 14 days</div></div>
+      <div class="plan-tab" data-plan="business" onclick="selectPlan(this)"><div class="plan-name">Business</div><div class="plan-price">Free 14 days</div></div>
     </div>
-    <div class="success-screen" id="success-screen">
-      <div class="success-icon"><i class="fa-solid fa-check"></i></div>
-      <h2>Trial Started!</h2>
-      <p>Welcome to LifeSync! Your 14-day free trial is active. No payment needed yet.</p>
-      <a href="dashboard.html" class="btn-dash" id="dash-link">Go to My Dashboard &rarr;</a>
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" id="fname" placeholder="Aaron"/><div class="error-msg" id="fname-err">Required</div></div>
+      <div class="form-group"><label>Last Name</label><input type="text" id="lname" placeholder="Cruz"/><div class="error-msg" id="lname-err">Required</div></div>
     </div>
+    <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="you@email.com"/><div class="error-msg" id="email-err">Enter a valid email</div></div>
+    <div class="form-group"><label>Password</label>
+      <div class="password-wrap"><input type="password" id="password" placeholder="Min. 8 characters" oninput="checkStr(this.value)"/><button class="toggle-pw" type="button" onclick="togglePw()"><i class="fa-solid fa-eye"></i></button></div>
+      <div class="strength-bar"><div class="strength-fill" id="sfill"></div></div>
+      <div class="error-msg" id="pw-err">Password must be at least 8 characters</div>
+    </div>
+    <p class="terms">By signing up you agree to LifeSync&apos;s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+    <button class="btn-submit" id="submit-btn" onclick="handleSignup()"><i class="fa-solid fa-gift" style="margin-right:.4rem"></i>Start My Free Trial</button>
+    <div class="divider"><span>or sign up with</span></div>
+    <button class="btn-google" onclick="alert('Google sign-in available in the full version.')">
+      <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
   </div>
-</div>
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+    <h2>Trial Started!</h2>
+    <p>Welcome to LifeSync! Your 14-day free trial is active. No payment needed yet.</p>
+    <a href="dashboard.html" class="btn-dash">Go to Dashboard &rarr;</a>
+  </div>
+</div></div>
 <script>
-  var selectedPlan = 'individual';
-  function selectPlan(el){ document.querySelectorAll('.plan-tab').forEach(function(t){t.classList.remove('active');}); el.classList.add('active'); selectedPlan=el.dataset.plan; }
-  function togglePw(){ var inp=document.getElementById('password'); var btn=document.querySelector('.toggle-pw'); var isT=inp.type==='text'; inp.type=isT?'password':'text'; btn.innerHTML=isT?'<i class="fa-solid fa-eye"></i>':'<i class="fa-solid fa-eye-slash"></i>'; }
-  function checkStrength(val){ var fill=document.getElementById('strength-fill'); var score=0; if(val.length>=8)score++; if(/[A-Z]/.test(val))score++; if(/[0-9]/.test(val))score++; if(/[^A-Za-z0-9]/.test(val))score++; var colors=['#FF4D6A','#FFD700','#00A8CC','#00D4FF']; var widths=['25%','50%','75%','100%']; fill.style.width=val?(widths[score-1]||'10%'):'0'; fill.style.background=val?(colors[score-1]||'#FF4D6A'):'transparent'; }
-  function validate(){ var ok=true; var fields=[{id:'fname',errId:'fname-err',check:function(v){return v.trim().length>0;}},{id:'lname',errId:'lname-err',check:function(v){return v.trim().length>0;}},{id:'email',errId:'email-err',check:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:'password',errId:'pw-err',check:function(v){return v.length>=8;}}]; fields.forEach(function(f){var inp=document.getElementById(f.id);var err=document.getElementById(f.errId);if(!f.check(inp.value)){inp.classList.add('error');err.classList.add('show');ok=false;}else{inp.classList.remove('error');err.classList.remove('show');}}); return ok; }
-  function getFingerprint(){ var s=[navigator.userAgent,navigator.language,screen.width+'x'+screen.height,screen.colorDepth,new Date().getTimezoneOffset()].join('|'); var h=0; for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h|0;} return Math.abs(h).toString(36); }
-  function handleSignup(){ if(!validate())return; var btn=document.getElementById('submit-btn'); btn.textContent='Creating your account...'; btn.disabled=true; setTimeout(function(){ localStorage.setItem('ls_user',JSON.stringify({name:document.getElementById('fname').value,email:document.getElementById('email').value,plan:selectedPlan})); localStorage.setItem('ls_plan',selectedPlan); localStorage.setItem('ls_trial_start',Date.now().toString()); localStorage.setItem('ls_trial_plan',selectedPlan); var fp=getFingerprint(); var used=JSON.parse(localStorage.getItem('ls_trial_devices')||'[]'); if(used.indexOf(fp)===-1){used.push(fp);localStorage.setItem('ls_trial_devices',JSON.stringify(used));} document.getElementById('form-section').style.display='none'; document.getElementById('success-screen').classList.add('show'); },1200); }
-  var urlParams=new URLSearchParams(window.location.search); var urlPlan=urlParams.get('plan'); if(urlPlan){document.querySelectorAll('.plan-tab').forEach(function(t){t.classList.toggle('active',t.dataset.plan===urlPlan);}); selectedPlan=urlPlan;}
-  if(urlParams.get('trial_used')){document.getElementById('warn-box').classList.add('show');}
+  var sp="individual";
+  function selectPlan(el){document.querySelectorAll(".plan-tab").forEach(function(t){t.classList.remove("active");});el.classList.add("active");sp=el.dataset.plan;}
+  function togglePw(){var i=document.getElementById("password");var b=document.querySelector(".toggle-pw");var t=i.type==="text";i.type=t?"password":"text";b.innerHTML=t?"<i class='fa-solid fa-eye'></i>":"<i class='fa-solid fa-eye-slash'></i>";}
+  function checkStr(v){var f=document.getElementById("sfill");var s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;var c=["#FF4D6A","#FFD700","#aaa","#fff"];var w=["25%","50%","75%","100%"];f.style.width=v?(w[s-1]||"10%"):"0";f.style.background=v?(c[s-1]||"#FF4D6A"):"transparent";}
+  function validate(){var ok=true;var fs=[{id:"fname",e:"fname-err",fn:function(v){return v.trim().length>0;}},{id:"lname",e:"lname-err",fn:function(v){return v.trim().length>0;}},{id:"email",e:"email-err",fn:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:"password",e:"pw-err",fn:function(v){return v.length>=8;}}];fs.forEach(function(f){var i=document.getElementById(f.id);var e=document.getElementById(f.e);if(!f.fn(i.value)){i.classList.add("error");e.classList.add("show");ok=false;}else{i.classList.remove("error");e.classList.remove("show");}});return ok;}
+  function getFP(){var s=[navigator.userAgent,navigator.language,screen.width+"x"+screen.height,screen.colorDepth,new Date().getTimezoneOffset()].join("|");var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h=h|0;}return Math.abs(h).toString(36);}
+  function handleSignup(){if(!validate())return;var b=document.getElementById("submit-btn");b.textContent="Creating account...";b.disabled=true;setTimeout(function(){localStorage.setItem("ls_user",JSON.stringify({name:document.getElementById("fname").value,email:document.getElementById("email").value,plan:sp}));localStorage.setItem("ls_plan",sp);localStorage.setItem("ls_trial_start",Date.now().toString());localStorage.setItem("ls_trial_plan",sp);var fp=getFP();var used=JSON.parse(localStorage.getItem("ls_trial_devices")||"[]");if(used.indexOf(fp)===-1){used.push(fp);localStorage.setItem("ls_trial_devices",JSON.stringify(used));}document.getElementById("form-section").style.display="none";document.getElementById("success-screen").classList.add("show");},1200);}
+  var up=new URLSearchParams(window.location.search);var uplan=up.get("plan");if(uplan){document.querySelectorAll(".plan-tab").forEach(function(t){t.classList.toggle("active",t.dataset.plan===uplan);});sp=uplan;}
+  if(up.get("trial_used"))document.getElementById("warn-box").classList.add("show");
 </script>
-</body>
-</html>
+</body></html>

@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#020B18;--bg2:#050F20;--cyan:#00D4FF;--teal:#0D9488;--white:#FFFFFF;--off-white:#E2EEF7;--muted:#6B8CA8;--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.09);--glass-hover:rgba(255,255,255,.08);--amber:#FFD700;--rose:#FF6B9D;}
+    :root{--bg:#080808;--bg2:#0D0D0D;--glass:rgba(255,255,255,.045);--glass-b:rgba(255,255,255,.08);--glass-hover:rgba(255,255,255,.07);--border:rgba(255,255,255,.07);--glass-border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.14);--white:#FFFFFF;--off-white:#E2EEF7;--muted:rgba(255,255,255,.3);--dim:rgba(255,255,255,.55);--amber:#FFD700;--rose:#FF6B9D;--cyan:#00D4FF;--teal:#00B4A0;}
     html,body{height:100%;}
     body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--off-white);display:flex;flex-direction:column;}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 5% 30%,rgba(0,212,255,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 95% 70%,rgba(13,148,136,.06) 0%,transparent 60%);}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:none;}
 
     /* TRIAL BANNER */
     .trial-banner{background:linear-gradient(90deg,rgba(0,212,255,.12),rgba(13,148,136,.08));border-bottom:1px solid rgba(0,212,255,.15);padding:.75rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.85rem;position:relative;z-index:200;}
@@ -25,7 +25,7 @@
     .app-wrap{display:flex;flex:1;position:relative;z-index:1;}
 
     /* SIDEBAR */
-    .sidebar{width:240px;background:rgba(5,15,32,.9);backdrop-filter:blur(24px);border-right:1px solid var(--glass-border);min-height:100vh;display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;padding-top:4.5rem;}
+    .sidebar{width:240px;background:rgba(10,10,10,.85);backdrop-filter:blur(24px);border-right:1px solid var(--glass-border);min-height:100vh;display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;padding-top:4.5rem;}
     .sidebar-logo{font-weight:900;font-size:1.4rem;color:var(--white);padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--glass-border);text-decoration:none;display:block;letter-spacing:-1px;}
     .sidebar-logo span{color:var(--cyan);}
     .nav-section{padding:1.2rem 1rem .5rem;font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.25);}
@@ -53,7 +53,7 @@
 
     /* STATS */
     .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem;}
-    .stat-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:18px;padding:1.4rem 1.5rem;transition:transform .2s,box-shadow .2s,border-color .2s;}
+    .stat-card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:1.4rem 1.5rem;transition:transform .2s,box-shadow .2s,border-color .2s;}
     .stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,212,255,.08);border-color:rgba(0,212,255,.15);}
     .stat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:1rem;border:1px solid var(--glass-border);}
     .stat-value{font-size:1.8rem;font-weight:900;color:var(--white);letter-spacing:-1px;margin-bottom:.2rem;}
@@ -125,6 +125,12 @@
 </head>
 <body>
 
+<div class='orbs'><div class='orb'></div><div class='orb'></div><div class='orb'></div><div class='orb'></div><div class='orb'></div></div><div class='noise'></div>
+<div class="orbs" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+  <div class="orb" style="position:absolute;width:300px;height:300px;top:-80px;left:-80px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.15),rgba(20,20,30,.92) 60%,rgba(8,8,12,.96));box-shadow:inset 4px 4px 12px rgba(255,255,255,.1),inset -4px -4px 12px rgba(0,0,0,.7),0 8px 40px rgba(0,0,0,.8);animation:orb-float 26s linear infinite;opacity:.55;"></div>
+  <div class="orb" style="position:absolute;width:200px;height:200px;bottom:-50px;right:-50px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.12),rgba(20,20,30,.92) 60%,rgba(8,8,12,.96));box-shadow:inset 4px 4px 10px rgba(255,255,255,.08),inset -4px -4px 10px rgba(0,0,0,.7),0 6px 32px rgba(0,0,0,.8);animation:orb-float 20s linear infinite;animation-delay:-8s;opacity:.45;"></div>
+</div>
+<style>@keyframes orb-float{0%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-20px) rotate(180deg);}100%{transform:translateY(0) rotate(360deg);}}</style>
 <div class="trial-banner" id="trial-banner" style="display:none;">
   <span><i class="fa-solid fa-gift" style="margin-right:.5rem"></i><strong id="trial-msg">14 days left in your free trial.</strong> Add team members and unlock full features after subscribing.</span>
   <button class="btn-upgrade" onclick="window.location.href='checkout.html?plan='+(localStorage.getItem('ls_trial_plan')||'individual')">Upgrade Now</button>
